@@ -28,7 +28,11 @@ namespace SAAS.Pages
 
             SqlConnection.ClearAllPools();
             return DDAALL.ExecuteSelectCommand(cm);
-        }      public static DataTable GetAllMainRecord()
+        }     
+        
+        
+        
+        public static DataTable GetAllMainRecord()
         {
 
 
@@ -54,7 +58,8 @@ namespace SAAS.Pages
 
             SqlConnection.ClearAllPools();
             return DDAALL.ExecuteSelectCommand(cm);
-        }  public static DataTable GetSubRecordByID(int ID)
+        }  
+        public static DataTable GetSubRecordByID(int ID)
         {
 
 
@@ -67,7 +72,10 @@ namespace SAAS.Pages
 
             SqlConnection.ClearAllPools();
             return DDAALL.ExecuteSelectCommand(cm);
-        }  public static DataTable DeleteSubRecordByID(int ID)
+        } 
+        
+        
+        public static DataTable DeleteSubRecordByID(int ID)
         {
 
 
@@ -80,7 +88,8 @@ namespace SAAS.Pages
 
             SqlConnection.ClearAllPools();
             return DDAALL.ExecuteSelectCommand(cm);
-        }  public static DataTable GetMainRecordByID(int ID)
+        }  
+        public static DataTable GetMainRecordByID(int ID)
         {
 
 
@@ -121,7 +130,7 @@ namespace SAAS.Pages
         
         
         
-        public static bool UpdateSubRecord(int MainRecordID, string TheUpdate, string Notes,int ID )
+        public static bool UpdateSubRecord(int MainRecordID, string TheUpdate, string Notes,int ID ,string UpdateDate)
 
         {
             SqlCommand cm;
@@ -132,6 +141,7 @@ namespace SAAS.Pages
             cm.Parameters.AddWithValue("@TheUpdate", TheUpdate);
             cm.Parameters.AddWithValue("@Notes", Notes);
             cm.Parameters.AddWithValue("@ID", ID);
+            cm.Parameters.AddWithValue("@UpdateDate", UpdateDate);
             SqlConnection.ClearAllPools();
             return DDAALL.ExecuteCommand(cm);
 
@@ -139,7 +149,7 @@ namespace SAAS.Pages
         }  
            
                  
-        public static bool InsertIntoSubRecord(int MainRecordID, string TheUpdate, string Notes)
+        public static bool InsertIntoSubRecord(int MainRecordID, string TheUpdate, string Notes,string UpdateDate)
 
         {
             SqlCommand cm;
@@ -149,6 +159,7 @@ namespace SAAS.Pages
             cm.Parameters.AddWithValue("@MainRecordID", MainRecordID);
             cm.Parameters.AddWithValue("@TheUpdate", TheUpdate);
             cm.Parameters.AddWithValue("@Notes", Notes);
+            cm.Parameters.AddWithValue("@UpdateDate", UpdateDate);
             SqlConnection.ClearAllPools();
             return DDAALL.ExecuteCommand(cm);
 

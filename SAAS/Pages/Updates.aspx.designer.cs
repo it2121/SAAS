@@ -11,7 +11,7 @@ namespace SAAS.Pages
 {
 
 
-    public partial class EMainPage
+    public partial class Updates
     {
 
         /// <summary>
