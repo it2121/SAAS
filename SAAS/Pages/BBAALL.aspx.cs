@@ -16,6 +16,20 @@ namespace SAAS.Pages
 
         }
 
+        public static DataTable GetList_Finished()
+        {
+
+
+            SqlCommand cm;
+            cm = DDAALL.CreateCommand();
+            cm.CommandText = "GetList_Finished";
+
+
+
+            SqlConnection.ClearAllPools();
+            return DDAALL.ExecuteSelectCommand(cm);
+        }     
+        
         public static DataTable GetList()
         {
 
@@ -105,7 +119,7 @@ namespace SAAS.Pages
         }
        
         public static bool UpdateMainRecord(string ProjectName,
-           string Dep,int ID)
+           string Dep,int ID,string Ord)
 
         {
             SqlCommand cm;
@@ -117,6 +131,7 @@ namespace SAAS.Pages
             cm.Parameters.AddWithValue("@ProjectName", ProjectName);
             cm.Parameters.AddWithValue("@Dep", Dep);
             cm.Parameters.AddWithValue("@ID", ID);
+            cm.Parameters.AddWithValue("@Ord", Ord);
     
 
 
@@ -130,7 +145,7 @@ namespace SAAS.Pages
         
         
         
-        public static bool UpdateSubRecord(int MainRecordID, string TheUpdate, string Notes,int ID ,string UpdateDate)
+        public static bool UpdateSubRecord(int MainRecordID, string TheUpdate, string Notes,int ID ,string UpdateDate ,string Ord)
 
         {
             SqlCommand cm;
@@ -142,6 +157,7 @@ namespace SAAS.Pages
             cm.Parameters.AddWithValue("@Notes", Notes);
             cm.Parameters.AddWithValue("@ID", ID);
             cm.Parameters.AddWithValue("@UpdateDate", UpdateDate);
+            cm.Parameters.AddWithValue("@Ord", Ord);
             SqlConnection.ClearAllPools();
             return DDAALL.ExecuteCommand(cm);
 
@@ -149,7 +165,7 @@ namespace SAAS.Pages
         }  
            
                  
-        public static bool InsertIntoSubRecord(int MainRecordID, string TheUpdate, string Notes,string UpdateDate)
+        public static bool InsertIntoSubRecord(int MainRecordID, string TheUpdate, string Notes,string UpdateDate,string Ord)
 
         {
             SqlCommand cm;
@@ -160,6 +176,7 @@ namespace SAAS.Pages
             cm.Parameters.AddWithValue("@TheUpdate", TheUpdate);
             cm.Parameters.AddWithValue("@Notes", Notes);
             cm.Parameters.AddWithValue("@UpdateDate", UpdateDate);
+            cm.Parameters.AddWithValue("@Ord", Ord);
             SqlConnection.ClearAllPools();
             return DDAALL.ExecuteCommand(cm);
 
@@ -205,8 +222,9 @@ namespace SAAS.Pages
         
         
         
-        public static bool InsertIntoMainRecord(string ProjectName,
-           string Dep)
+        public static bool InsertIntoMainRecord(
+            string ProjectName,
+           string Dep,string Ord)
 
         {
             SqlCommand cm;
@@ -217,6 +235,7 @@ namespace SAAS.Pages
 
             cm.Parameters.AddWithValue("@ProjectName", ProjectName);
             cm.Parameters.AddWithValue("@Dep", Dep);
+            cm.Parameters.AddWithValue("@Ord", Ord);
     
 
 

@@ -131,13 +131,22 @@
 
              
             <div class="row m-2">
-
-                <div class="col-4">
+                     <div class="col-1">
 
 
            
                          <div class="form__group field">
-     <asp:TextBox runat="server" ID="ProjectName"  class="form__field" type="input" placeholder="اسم المشروع" />
+     <asp:TextBox runat="server"   dir="rtl" ID="Ord"  class="form__field" type="input" placeholder="التسلسل" />
+
+    <label for="name" class="form__label">التسلسل</label>
+</div>
+</div>    
+                <div class="col-3">
+
+
+           
+                         <div class="form__group field">
+     <asp:TextBox runat="server" dir="rtl" ID="ProjectName"  class="form__field" type="input" placeholder="اسم المشروع" />
 
     <label for="name" class="form__label">اسم المشروع</label>
 </div>
@@ -148,7 +157,7 @@
 
            
                          <div class="form__group field">
-     <asp:TextBox runat="server" ID="Dep"  class="form__field" type="input" placeholder="القسم" />
+     <asp:TextBox runat="server" ID="Dep"   dir="rtl" class="form__field" type="input" placeholder="القسم" />
 
     <label for="name" class="form__label">القسم</label>
 </div>
@@ -158,10 +167,11 @@
 
            
                          <div class="form__group field">
-     <asp:TextBox runat="server" ID="Finished"  class="form__field" type="input" placeholder="الحالة" />
+     <asp:TextBox runat="server" ID="Finished"  dir="rtl"  class="form__field" type="input" placeholder="الحالة" />
 
     <label for="name" class="form__label">الحالة</label>
 </div>
+
 </div>
 
 

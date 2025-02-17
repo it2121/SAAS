@@ -37,7 +37,8 @@ namespace SAAS.Pages
                         Notes.Text = dt["Notes"].ToString();
 
 
-                        UpdateDate.Text = dt["UpdateDate"].ToString(); 
+                        UpdateDate.Text = dt["UpdateDate"].ToString();
+                        Ord.Text = dt["Ord"].ToString(); 
 
 
 
@@ -57,9 +58,18 @@ namespace SAAS.Pages
                     TheUpdate.Text = "";
                     Notes.Text = "";
 
+                    UpdateDate.Text = DateTime.Now.ToString("MM/dd/yyyy");
+                    DataTable dt = BBAALL.GetAllSubRecordsOfMainRecord(MainRecordID);
+                    int max = 0;
+                    foreach(DataRow row in dt.Rows)
+                    {
+                        if (max < Convert.ToInt32(row["Ord"].ToString()))
+                            max = Convert.ToInt32(row["Ord"].ToString());
 
-                    UpdateDate.Text = "";
+                    }
 
+
+                    Ord.Text = (max + 1)+"";
 
                 }
 
@@ -85,7 +95,7 @@ namespace SAAS.Pages
 
 
 
-                BBAALL.InsertIntoSubRecord(MainRecordID, TheUpdate.Text, Notes.Text, UpdateDate.Text);
+                BBAALL.InsertIntoSubRecord(MainRecordID, TheUpdate.Text, Notes.Text, UpdateDate.Text, Ord.Text);
 
 
 
@@ -97,7 +107,7 @@ namespace SAAS.Pages
             {
 
 
-                BBAALL.UpdateSubRecord(MainRecordID, TheUpdate.Text, Notes.Text, ID, UpdateDate.Text);
+                BBAALL.UpdateSubRecord(MainRecordID, TheUpdate.Text, Notes.Text, ID, UpdateDate.Text, Ord.Text);
 
 
 

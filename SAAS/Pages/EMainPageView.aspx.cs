@@ -11,15 +11,10 @@ using System.Web.UI.WebControls;
 
 namespace SAAS.Pages
 {
-    public partial class EMainPage : System.Web.UI.Page
+    public partial class EMainPageView : System.Web.UI.Page
     {
-        public static int ProjectID = 0;
-        public static bool print = false;
-        public static int printID = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
-          //  Main.openPage = "Expences";
-
             if (!IsPostBack)
             {
 
@@ -36,7 +31,6 @@ namespace SAAS.Pages
 
 
             }
-
         }
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -86,18 +80,18 @@ namespace SAAS.Pages
             if (x.Equals("GoToUpdate"))
             {
 
-                Updates.MainRecordID = Convert.ToInt32(e.CommandArgument.ToString());
+                UpdatesView.MainRecordID = Convert.ToInt32(e.CommandArgument.ToString());
 
 
 
 
 
-                Response.Redirect("Updates.aspx");
+                Response.Redirect("UpdatesView.aspx");
 
             }
-         
 
-        
+
+
 
         }
         protected void PaidCheck(object sender, EventArgs e)
@@ -114,22 +108,22 @@ namespace SAAS.Pages
 
             BBAALL.SetFinished(IIDD);
 
-            Response.Redirect("EMainPage.aspx");
+            Response.Redirect("EMainPageView.aspx");
 
         }
         protected void GetExtendedReport(object sender, EventArgs e)
         {
 
-           
+
 
         }
-         protected void GetSummationReport(object sender, EventArgs e)
+        protected void GetSummationReport(object sender, EventArgs e)
         {
 
             exportSum();
 
         }
-        
+
         protected void GoToNewItem(object sender, EventArgs e)
         {
 
@@ -190,7 +184,7 @@ namespace SAAS.Pages
 
             // string filename = HttpRuntime.AppDomainAppPath + "/Images/pdffile.pdf";
             //  string headerpath = HttpRuntime.AppDomainAppPath + "/Images/pdfheader.png";
-        //    export(RecID);
+            //    export(RecID);
 
 
         }
@@ -234,7 +228,7 @@ namespace SAAS.Pages
 
 
 
-            if (SummationList.Rows.Count>0)
+            if (SummationList.Rows.Count > 0)
             {
                 iTextSharp.text.Font NormalFont = FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
                 Document doc = new Document(PageSize.A4, 88f, 88f, 110f, 25f);
@@ -362,11 +356,11 @@ namespace SAAS.Pages
                         counter++;
 
 
-                    phrase = new Phrase();
-                    cell = PhraseCell(new Phrase(row["Notes"].ToString(), fcontent), PdfPCell.ALIGN_CENTER);
-                    cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
+                        phrase = new Phrase();
+                        cell = PhraseCell(new Phrase(row["Notes"].ToString(), fcontent), PdfPCell.ALIGN_CENTER);
+                        cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
 
-                    table.AddCell(cell);
+                        table.AddCell(cell);
 
 
 
@@ -400,7 +394,7 @@ namespace SAAS.Pages
 
 
                         phrase = new Phrase();
-                        cell = PhraseCell(new Phrase(counter+"", fcontent), PdfPCell.ALIGN_CENTER);
+                        cell = PhraseCell(new Phrase(counter + "", fcontent), PdfPCell.ALIGN_CENTER);
                         cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
 
                         table.AddCell(cell);
@@ -428,106 +422,106 @@ namespace SAAS.Pages
 
 
 
-/*
-                    if (dt.Rows.Count > 0)
-                    {
+                    /*
+                                        if (dt.Rows.Count > 0)
+                                        {
 
 
-                        //single table to holde Quality Control
-                        table = new PdfPTable(1);
-                        table.WidthPercentage = 130;
-                        table.HorizontalAlignment = Element.ALIGN_CENTER;
-                        table.SetWidths(new float[] { 300f });
-                        table.SpacingBefore = 20f;
-
-
-
-
-                        cell = PhraseCellHeader(new Phrase("الدفعات", f), PdfPCell.ALIGN_CENTER);
-                        cell.BackgroundColor = GrayColor.WHITE;
-                        cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-
-
-
-                        table.AddCell(cell);
-                        doc.Add(table);
-
-
-                        table = new PdfPTable(3);
-                        table.WidthPercentage = 130;
-                        table.HorizontalAlignment = Element.ALIGN_CENTER;
-                        table.SetWidths(new float[] { 100f, 450f, 300f });
-                        table.SpacingBefore = 10f;
-
-
-                        cell = PhraseCell(new Phrase("رقم الدفعة", fcontent), PdfPCell.ALIGN_CENTER);
-                        cell.BackgroundColor = GrayColor.LIGHT_GRAY;
-
-                        cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                        table.AddCell(cell);
-
-
-                        cell = PhraseCell(new Phrase("مبلغ الدفعة", fcontent), PdfPCell.ALIGN_CENTER);
-                        cell.BackgroundColor = GrayColor.LIGHT_GRAY;
-
-                        cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                        table.AddCell(cell);
-
-
-
-                        cell = PhraseCell(new Phrase("التاريخ", fcontent), PdfPCell.ALIGN_CENTER);
-                        cell.BackgroundColor = GrayColor.LIGHT_GRAY;
-
-                        cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-                        table.AddCell(cell);
+                                            //single table to holde Quality Control
+                                            table = new PdfPTable(1);
+                                            table.WidthPercentage = 130;
+                                            table.HorizontalAlignment = Element.ALIGN_CENTER;
+                                            table.SetWidths(new float[] { 300f });
+                                            table.SpacingBefore = 20f;
 
 
 
 
-                        int counter = 0;
-                        foreach (DataRow row in dt.Rows)
-                        {
-                            counter++;
-                            phrase = new Phrase();
-                            cell = PhraseCell(new Phrase(counter + "", fcontent), PdfPCell.ALIGN_CENTER);
-                            cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-
-                            table.AddCell(cell);
+                                            cell = PhraseCellHeader(new Phrase("الدفعات", f), PdfPCell.ALIGN_CENTER);
+                                            cell.BackgroundColor = GrayColor.WHITE;
+                                            cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
 
 
 
-
-                            phrase = new Phrase();
-                            cell = PhraseCell(new Phrase(MyStringManager.GetNumberWithComas(row["PaidAmount"].ToString()) + "  دينار عراقي  ", fcontent), PdfPCell.ALIGN_CENTER);
-                            cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-
-                            table.AddCell(cell);
+                                            table.AddCell(cell);
+                                            doc.Add(table);
 
 
-
-                            phrase = new Phrase();
-                            cell = PhraseCell(new Phrase(MyStringManager.GetDateAfterCheckingFormating(row["Date"].ToString()), fcontent), PdfPCell.ALIGN_CENTER);
-
-                            cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-
-                            table.AddCell(cell);
+                                            table = new PdfPTable(3);
+                                            table.WidthPercentage = 130;
+                                            table.HorizontalAlignment = Element.ALIGN_CENTER;
+                                            table.SetWidths(new float[] { 100f, 450f, 300f });
+                                            table.SpacingBefore = 10f;
 
 
+                                            cell = PhraseCell(new Phrase("رقم الدفعة", fcontent), PdfPCell.ALIGN_CENTER);
+                                            cell.BackgroundColor = GrayColor.LIGHT_GRAY;
+
+                                            cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
+                                            table.AddCell(cell);
+
+
+                                            cell = PhraseCell(new Phrase("مبلغ الدفعة", fcontent), PdfPCell.ALIGN_CENTER);
+                                            cell.BackgroundColor = GrayColor.LIGHT_GRAY;
+
+                                            cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
+                                            table.AddCell(cell);
 
 
 
-                        }
+                                            cell = PhraseCell(new Phrase("التاريخ", fcontent), PdfPCell.ALIGN_CENTER);
+                                            cell.BackgroundColor = GrayColor.LIGHT_GRAY;
+
+                                            cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
+                                            table.AddCell(cell);
+
+
+
+
+                                            int counter = 0;
+                                            foreach (DataRow row in dt.Rows)
+                                            {
+                                                counter++;
+                                                phrase = new Phrase();
+                                                cell = PhraseCell(new Phrase(counter + "", fcontent), PdfPCell.ALIGN_CENTER);
+                                                cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
+
+                                                table.AddCell(cell);
+
+
+
+
+                                                phrase = new Phrase();
+                                                cell = PhraseCell(new Phrase(MyStringManager.GetNumberWithComas(row["PaidAmount"].ToString()) + "  دينار عراقي  ", fcontent), PdfPCell.ALIGN_CENTER);
+                                                cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
+
+                                                table.AddCell(cell);
+
+
+
+                                                phrase = new Phrase();
+                                                cell = PhraseCell(new Phrase(MyStringManager.GetDateAfterCheckingFormating(row["Date"].ToString()), fcontent), PdfPCell.ALIGN_CENTER);
+
+                                                cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
+
+                                                table.AddCell(cell);
 
 
 
 
 
-                        doc.Add(table);
-
-                    }
+                                            }
 
 
-*/
+
+
+
+                                            doc.Add(table);
+
+                                        }
+
+
+                    */
 
                     table = new PdfPTable(1);
                     table.WidthPercentage = 130;
@@ -577,67 +571,8 @@ namespace SAAS.Pages
 
 
 
-    }
-    public class PDFFooter : PdfPageEventHelper
-    {
-        private static PdfPCell PhraseCellHeader(Phrase phrase, int align)
-        {
-            PdfPCell cell = new PdfPCell(phrase);
-            cell.BorderColor = BaseColor.WHITE;
-            cell.VerticalAlignment = PdfPCell.ALIGN_TOP;
-            cell.HorizontalAlignment = align;
-            cell.PaddingBottom = 2f;
-            cell.PaddingTop = 0f;
-            return cell;
-        }
-
-        private static PdfPCell ImageCell(string path, float scale, int align)
-        {
 
 
-            iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(HttpContext.Current.Server.MapPath(path));
-            image.ScalePercent(scale);
-            PdfPCell cell = new PdfPCell(image);
-            cell.BorderColor = BaseColor.WHITE;
-            cell.VerticalAlignment = PdfPCell.ALIGN_TOP;
-            cell.HorizontalAlignment = align;
-            cell.PaddingBottom = 0f;
-            cell.PaddingTop = 0f;
-            return cell;
-        }
-
-        public override void OnEndPage(PdfWriter writer, Document document)
-        {
-            BaseFont basefontArabic = BaseFont.CreateFont(System.Web.HttpContext.Current.Server.MapPath("/fonts/times.ttf"), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-            iTextSharp.text.Font f = new iTextSharp.text.Font(basefontArabic, 10);
-            iTextSharp.text.Font fheader = new iTextSharp.text.Font(basefontArabic, 20);
-            //header
-            BaseColor color = null;
-            Phrase phrase = null;
-
-
-
-
-
-            PdfPTable tabhead = new PdfPTable(1);
-            PdfPCell celllogo;
-            tabhead.SpacingAfter = 30F;
-            tabhead.TotalWidth = 500f;
-            tabhead.LockedWidth = true;
-            tabhead.SetWidths(new float[] { 1f });
-            float h = tabhead.TotalHeight;
-
-
-            //Company Logo
-            string path = "~/Images/pdfheader.png";
-            celllogo = ImageCell(path, 54f, PdfPCell.ALIGN_CENTER);
-            tabhead.AddCell(celllogo);
-
-
-            tabhead.WriteSelectedRows(0, -1, 30f, 840f, writer.DirectContent);
-
-
-
-        }
+    
     }
 }

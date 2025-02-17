@@ -77,8 +77,10 @@
     <Content Include="Pages\DDAALL.aspx" />
     <Content Include="Pages\EMainPage.aspx" />
     <Content Include="Pages\EMainPageEditor.aspx" />
+    <Content Include="Pages\EMainPageView.aspx" />
     <Content Include="Pages\Updates.aspx" />
     <Content Include="Pages\UpdatesEditor.aspx" />
+    <Content Include="Pages\UpdatesView.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +112,13 @@
     <Compile Include="Pages\EMainPageEditor.aspx.designer.cs">
       <DependentUpon>EMainPageEditor.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pages\EMainPageView.aspx.cs">
+      <DependentUpon>EMainPageView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\EMainPageView.aspx.designer.cs">
+      <DependentUpon>EMainPageView.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Main.Master.cs">
       <DependentUpon>Main.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -131,11 +140,22 @@
     <Compile Include="Pages\UpdatesEditor.aspx.designer.cs">
       <DependentUpon>UpdatesEditor.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pages\UpdatesView.aspx.cs">
+      <DependentUpon>UpdatesView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\UpdatesView.aspx.designer.cs">
+      <DependentUpon>UpdatesView.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Pages\Main.Master" />
+    <None Include="Properties\PublishProfiles\ortest21-002-site1 - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\ortest21-002-site1 - FTP1.pubxml" />
+    <None Include="Properties\PublishProfiles\ortest21-002-site1 - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\ortest21-002-site1 - Web Deploy1.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

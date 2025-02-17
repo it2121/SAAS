@@ -20,8 +20,8 @@ namespace SAAS.Pages
         //  static string DatabaseConnectionStringLAW = @"Server=sql5112.site4now.net; Database=db_aa8601_lawdb; User Id=db_aa8601_lawdb_admin; Password=Akastarlord1._; ";
 
 
-        //   static string DatabaseConnectionString = @"Server=sql5113.site4now.net; Database=db_aa8601_testdb; User Id=db_aa8601_testdb_admin; Password=Akastarlord1._; ";
-        //   static string DatabaseConnectionStringLAW = @"Server=sql5112.site4now.net; Database=db_aa8601_lawdb; User Id=db_aa8601_lawdb_admin; Password=Akastarlord1._; ";
+          static string DatabaseConnectionString = @"Server=sql6033.site4now.net; Database=db_ab2b61_saas; User Id=db_ab2b61_saas_admin; Password=Akastarlord1._; ";
+          static string DatabaseConnectionStringLAW = @"Server=sql6033.site4now.net; Database=db_ab2b61_saas; User Id=db_ab2b61_saas_admin; Password=Akastarlord1._; ";
 
 
         // static string DatabaseConnectionString = @"Server=192.168.0.117\HEADSERVER;Database=ExpensesDB; User Id=exp; Password=123;  ";
@@ -30,10 +30,10 @@ namespace SAAS.Pages
 
 
 
-        static string DatabaseConnectionString = @"Server=DELTA\SQLEXPRESS;  Database=SAAS; Trusted_Connection  = True;";
+       // static string DatabaseConnectionString = @"Server=DELTA\SQLEXPRESS;  Database=SAAS; Trusted_Connection  = True;";
        
         
-        static string DatabaseConnectionStringLAW = @"Server=DELTA\SQLEXPRESS;  Database=LawDB;      Trusted_Connection  = True;";
+       // static string DatabaseConnectionStringLAW = @"Server=DELTA\SQLEXPRESS;  Database=LawDB;      Trusted_Connection  = True;";
 
         //            static string DatabaseConnectionString = @"Server=DESKTOP-DE1EPPS;  Database=ExpensesDB;  User Id=exp; Password=123;";
         //              static string DatabaseConnectionStringLAW = @"Server=DESKTOP-DE1EPPS;  Database=LawDB;       User Id=exp; Password=123;";

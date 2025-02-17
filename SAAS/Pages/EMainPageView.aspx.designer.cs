@@ -11,7 +11,7 @@ namespace SAAS.Pages
 {
 
 
-    public partial class EMainPage
+    public partial class EMainPageView
     {
 
         /// <summary>
@@ -22,15 +22,6 @@ namespace SAAS.Pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel Panel1;
-
-        /// <summary>
-        /// AddnewBtn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton AddnewBtn;
 
         /// <summary>
         /// LinkButton1 control.

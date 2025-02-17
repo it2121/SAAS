@@ -35,6 +35,7 @@ namespace SAAS.Pages
 
                         ProjectName.Text = dt["ProjectName"].ToString();
                         Dep.Text = dt["Dep"].ToString();
+                        Ord.Text = dt["Ord"].ToString();
 
 
                         Finished.Text = "غير مكتملة";
@@ -63,6 +64,18 @@ namespace SAAS.Pages
 
 
                     Finished.Text = "غير مكتملة";
+                    DataTable dt = BBAALL.GetAllMainRecord();
+                    int max = 0;
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        if (max < Convert.ToInt32(row["Ord"].ToString()))
+                            max = Convert.ToInt32(row["Ord"].ToString());
+
+                    }
+
+
+                    Ord.Text = (max + 1) + "";
+
                 }
 
             }
@@ -92,7 +105,7 @@ namespace SAAS.Pages
 
 
 
-                BBAALL.InsertIntoMainRecord(ProjectName.Text, Dep.Text );
+                BBAALL.InsertIntoMainRecord(ProjectName.Text, Dep.Text, Ord.Text);
 
 
 
@@ -104,7 +117,7 @@ namespace SAAS.Pages
             {
 
 
-                BBAALL.UpdateMainRecord(ProjectName.Text, Dep.Text,ID);
+                BBAALL.UpdateMainRecord(ProjectName.Text, Dep.Text,ID, Ord.Text);
 
 
 

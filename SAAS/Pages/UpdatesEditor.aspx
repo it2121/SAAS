@@ -134,12 +134,23 @@
              
             <div class="row m-2">
 
-                <div class="col-6">
+                <div class="col-1">
 
 
            
                          <div class="form__group field">
-     <asp:TextBox runat="server" ID="TheUpdate"  class="form__field" type="input" placeholder="التحديث" />
+     <asp:TextBox runat="server" ID="Ord"  dir="rtl"  class="form__field" type="input" placeholder="التسلسل" />
+
+    <label for="name" class="form__label">التسلسل</label>
+</div>
+</div>     
+
+                <div class="col-5">
+
+
+           
+                         <div class="form__group field">
+     <asp:TextBox runat="server" ID="TheUpdate"  dir="rtl"  class="form__field" type="input" placeholder="التحديث" />
 
     <label for="name" class="form__label">التحديث</label>
 </div>
@@ -150,7 +161,7 @@
 
            
                          <div class="form__group field">
-     <asp:TextBox runat="server" ID="UpdateDate"  class="form__field" type="input" placeholder="التاريخ" />
+     <asp:TextBox runat="server" ID="UpdateDate"  dir="rtl"  class="form__field" type="input" placeholder="التاريخ" />
 
     <label for="name" class="form__label">التاريخ</label>
 </div>
@@ -160,7 +171,7 @@
 
            
                          <div class="form__group field">
-     <asp:TextBox runat="server" ID="Notes"  class="form__field" type="input" placeholder="الملاحظات" />
+     <asp:TextBox runat="server" ID="Notes"  dir="rtl"  class="form__field" type="input" placeholder="الملاحظات" />
 
     <label for="name" class="form__label">الملاحظات</label>
 </div>
