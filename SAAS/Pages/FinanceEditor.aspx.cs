@@ -95,7 +95,7 @@ namespace SAAS.Pages
 
 
 
-                BBAALL.InsertIntoFinance(PaidTo.Text,Convert.ToInt32(Amount.Text),PaidDate.Text,Ord.Text);
+                BBAALL.InsertIntoFinance(PaidTo.Text,Convert.ToInt32(MyStringManager.GetIntFromNumberStringWithComas (Amount.Text)),PaidDate.Text,Ord.Text);
 
 
 
@@ -107,7 +107,7 @@ namespace SAAS.Pages
             {
 
 
-                BBAALL.UpdateFinance(PaidTo.Text, Convert.ToInt32(Amount.Text), PaidDate.Text, Ord.Text,ID);
+                BBAALL.UpdateFinance(PaidTo.Text, Convert.ToInt32(MyStringManager.GetIntFromNumberStringWithComas(Amount.Text)), PaidDate.Text, Ord.Text,ID);
 
 
 

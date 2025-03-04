@@ -237,7 +237,10 @@ namespace SAAS.Pages
             if (SummationList.Rows.Count>0)
             {
                 iTextSharp.text.Font NormalFont = FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
-                Document doc = new Document(PageSize.A4, 88f, 88f, 110f, 25f);
+               /* Document doc = new Document(PageSize.A4.Rotate(), 88f, 88f, 110f, 25f  );*/
+                Document doc = new Document(iTextSharp.text.PageSize.A4.Rotate(), 100, 100, 25, 25);
+
+
 
                 BaseFont basefontArabic = BaseFont.CreateFont(System.Web.HttpContext.Current.Server.MapPath("/fonts/times.ttf"), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
                 iTextSharp.text.Font f = new iTextSharp.text.Font(basefontArabic, 18);
@@ -263,14 +266,25 @@ namespace SAAS.Pages
                     DateTime localDate = DateTime.Now;
 
 
+                    PdfPTable tabhead = new PdfPTable(1);
+                    PdfPCell celllogo;
+                    string path = "../Images/pdfheader.png";
+                    celllogo = ImageCell(path, 56f, PdfPCell.ALIGN_CENTER);
+                    tabhead.AddCell(celllogo);
+
+                    doc.Add(tabhead);
 
 
                     //table for header (Ref SOP NO, FORM NO and Certificate of Analaysis)
 
 
 
+
+
+
                     table = new PdfPTable(1);
                     table.WidthPercentage = 90;
+
                     table.HorizontalAlignment = Element.ALIGN_CENTER;
                     table.SetWidths(new float[] { 700f });
                     table.SpacingBefore = 10f;
@@ -286,7 +300,7 @@ namespace SAAS.Pages
                     table.AddCell(cell);
 
 
-                    doc.Add(new Paragraph("\n"));
+                   // doc.Add(new Paragraph("\n"));
 
 
 
@@ -301,7 +315,7 @@ namespace SAAS.Pages
                     table.HorizontalAlignment = Element.ALIGN_CENTER;
                     table.SetWidths(new float[] { 500f, 200f, 300f, 200f, 200f, 75f });
                     table.SpacingBefore = 20f;
-
+                   
 
 
 
@@ -571,16 +585,29 @@ namespace SAAS.Pages
                 }
 
             }
-
+          
         }
+        PdfPCell ImageCell(string path, float scale, int align)
+        {
 
+
+            iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(HttpContext.Current.Server.MapPath(path));
+            image.ScalePercent(scale);
+            PdfPCell cell = new PdfPCell(image);
+            cell.BorderColor = BaseColor.WHITE;
+            cell.VerticalAlignment = PdfPCell.ALIGN_TOP;
+            cell.HorizontalAlignment = align;
+            cell.PaddingBottom = 0f;
+            cell.PaddingTop = 0f;
+            return cell;
+        }
 
 
 
     }
     public class PDFFooter : PdfPageEventHelper
     {
-        private static PdfPCell PhraseCellHeader(Phrase phrase, int align)
+        public static PdfPCell PhraseCellHeader(Phrase phrase, int align)
         {
             PdfPCell cell = new PdfPCell(phrase);
             cell.BorderColor = BaseColor.WHITE;
@@ -591,7 +618,7 @@ namespace SAAS.Pages
             return cell;
         }
 
-        private static PdfPCell ImageCell(string path, float scale, int align)
+        public static PdfPCell ImageCell(string path, float scale, int align)
         {
 
 
@@ -622,6 +649,8 @@ namespace SAAS.Pages
             PdfPTable tabhead = new PdfPTable(1);
             PdfPCell celllogo;
             tabhead.SpacingAfter = 30F;
+            tabhead.WidthPercentage = 100; //table width to 100per
+
             tabhead.TotalWidth = 500f;
             tabhead.LockedWidth = true;
             tabhead.SetWidths(new float[] { 1f });
@@ -629,8 +658,8 @@ namespace SAAS.Pages
 
 
             //Company Logo
-            string path = "~/Images/pdfheader.png";
-            celllogo = ImageCell(path, 54f, PdfPCell.ALIGN_CENTER);
+            string path = "../Images/pdfheader.png";
+            celllogo = ImageCell(path, 20, PdfPCell.ALIGN_CENTER);
             tabhead.AddCell(celllogo);
 
 

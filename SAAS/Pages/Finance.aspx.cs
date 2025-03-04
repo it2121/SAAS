@@ -14,6 +14,14 @@ namespace SAAS.Pages
     {
         public static bool print = false;
         public static int printID = 0;
+
+
+        int Total = 0;
+        int AppTotal = 0;
+        int NonAppTotal = 0;
+
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -22,9 +30,7 @@ namespace SAAS.Pages
                 DataTable dt = BBAALL.GetAllFinance();
 
 
-                int Total = 0;
-                int AppTotal = 0;
-                int NonAppTotal = 0;
+              
                 foreach(DataRow row in dt.Rows)
                 {
                     Total += Convert.ToInt32(row["Amount"]);
@@ -49,9 +55,9 @@ namespace SAAS.Pages
                 }
 
 
-                TotalAmount.Text = MyStringManager.GetNumberWithComas(Total +"") + " - IQD";
-                TotalApproved.Text = MyStringManager.GetNumberWithComas(AppTotal + "") + " - IQD";
-                TotalNonApproved.Text = MyStringManager.GetNumberWithComas(NonAppTotal + "") + " - IQD";
+                TotalAmount.Text =MyStringManager.GetNumberWithComas(Total +"") + " - IQD" + "  المجموع  " ;
+                TotalApproved.Text =  MyStringManager.GetNumberWithComas(AppTotal + "") +  " - IQD" + "  المبالغ الموافق عليها  ";
+                TotalNonApproved.Text =  MyStringManager.GetNumberWithComas(NonAppTotal + "") + " - IQD"+"  المبالغ التي لم يوافق عليها بعد  " ;
 
 
                 DataGridUsers.DataSource = dt;
@@ -154,13 +160,13 @@ namespace SAAS.Pages
         protected void GetExtendedReport(object sender, EventArgs e)
         {
 
-
+            exportSum();
 
         }
         protected void GetSummationReport(object sender, EventArgs e)
         {
 
-            exportSum();
+          
 
         }
 
@@ -271,7 +277,8 @@ namespace SAAS.Pages
             if (SummationList.Rows.Count > 0)
             {
                 iTextSharp.text.Font NormalFont = FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
-                Document doc = new Document(PageSize.A4, 88f, 88f, 110f, 25f);
+                Document doc = new Document(iTextSharp.text.PageSize.A4.Rotate(), 100, 100, 25, 25);
+
 
                 BaseFont basefontArabic = BaseFont.CreateFont(System.Web.HttpContext.Current.Server.MapPath("/fonts/times.ttf"), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
                 iTextSharp.text.Font f = new iTextSharp.text.Font(basefontArabic, 18);
@@ -297,6 +304,14 @@ namespace SAAS.Pages
                     DateTime localDate = DateTime.Now;
 
 
+                    PdfPTable tabhead = new PdfPTable(1);
+                    PdfPCell celllogo;
+                    string path = "../Images/pdfheader.png";
+                    celllogo = ImageCell(path, 56f, PdfPCell.ALIGN_CENTER);
+                    tabhead.AddCell(celllogo);
+
+                    doc.Add(tabhead);
+
 
 
                     //table for header (Ref SOP NO, FORM NO and Certificate of Analaysis)
@@ -311,7 +326,7 @@ namespace SAAS.Pages
 
 
 
-                    cell = PhraseCellClear(new Phrase("جدول اعمال شركة الصومعة التلخيصي", fLarg), PdfPCell.ALIGN_CENTER);
+                    cell = PhraseCellClear(new Phrase("صرفيات دكتور اسماعيل", fLarg), PdfPCell.ALIGN_CENTER);
                     cell.BackgroundColor = GrayColor.WHITE;
 
                     cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
@@ -327,13 +342,113 @@ namespace SAAS.Pages
                     doc.Add(table);
 
 
+                    foreach (DataRow row in SummationList.Rows)
+                    {
+                        Total += Convert.ToInt32(row["Amount"]);
+
+                        if (row["Approved"].Equals("1"))
+                        {
+                            AppTotal += Convert.ToInt32(row["Amount"]);
+
+
+                        }
+                        else
+                        {
+
+                            NonAppTotal += Convert.ToInt32(row["Amount"]);
+
+
+
+                        }
+
+
+
+
+                    }
+
+
+
+                    table = new PdfPTable(3);
+                    table.WidthPercentage = 130;
+                    table.HorizontalAlignment = Element.ALIGN_CENTER;
+                    table.SetWidths(new float[] { 300f, 300f, 300f });
+                    table.SpacingBefore = 20f;
+
+                    doc.Add(new Paragraph("\n"));
+
+
+                    cell = PhraseCell(new Phrase("مجموع المبالغ", fsmall), PdfPCell.ALIGN_CENTER);
+                    cell.BackgroundColor = GrayColor.LIGHT_GRAY;
+
+                    cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
+                    table.AddCell(cell);
+
+
+
+
+
+                    cell = PhraseCell(new Phrase("المبالغ الموافق عليها", fsmall), PdfPCell.ALIGN_CENTER);
+                    cell.BackgroundColor = GrayColor.LIGHT_GRAY;
+
+                    cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
+                    table.AddCell(cell);
+
+                    cell = PhraseCell(new Phrase("المبالغ غير الموافق عليها بعد", f), PdfPCell.ALIGN_CENTER);
+                    cell.BackgroundColor = GrayColor.LIGHT_GRAY;
+
+                    cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
+                    table.AddCell(cell);
+
+
+
+
+
+
+                    phrase = new Phrase();
+                    cell = PhraseCell(new Phrase(MyStringManager.GetNumberWithComas(Total+""), fcontent), PdfPCell.ALIGN_CENTER);
+                    cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
+
+                    table.AddCell(cell);
+
+
+                    phrase = new Phrase();
+                    cell = PhraseCell(new Phrase(MyStringManager.GetNumberWithComas(AppTotal + ""), fcontent), PdfPCell.ALIGN_CENTER);
+                    cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
+
+                    table.AddCell(cell);
+
+
+                    phrase = new Phrase();
+                    cell = PhraseCell(new Phrase(MyStringManager.GetNumberWithComas(NonAppTotal + ""), fcontent), PdfPCell.ALIGN_CENTER);
+                    cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
+
+                    table.AddCell(cell);
+
+
+
+
+
+
+
+
+
+                    doc.Add(table);
+
+
+
+
+
+
+
+
+
 
 
                     var text = writer.PageNumber.ToString();
-                    table = new PdfPTable(6);
+                    table = new PdfPTable(5);
                     table.WidthPercentage = 130;
                     table.HorizontalAlignment = Element.ALIGN_CENTER;
-                    table.SetWidths(new float[] { 500f, 200f, 300f, 200f, 200f, 75f });
+                    table.SetWidths(new float[] {  200f, 200f, 200f, 400f, 75f });
                     table.SpacingBefore = 20f;
 
 
@@ -341,19 +456,12 @@ namespace SAAS.Pages
 
 
 
-                    cell = PhraseCell(new Phrase("الملاحظات", f), PdfPCell.ALIGN_CENTER);
-                    cell.BackgroundColor = GrayColor.LIGHT_GRAY;
-
-                    cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-
-
-                    table.AddCell(cell);
 
 
 
 
 
-                    cell = PhraseCell(new Phrase("تاريخ اخر المستجدات", fsmall), PdfPCell.ALIGN_CENTER);
+                    cell = PhraseCell(new Phrase("حالة الموافقة", fsmall), PdfPCell.ALIGN_CENTER);
                     cell.BackgroundColor = GrayColor.LIGHT_GRAY;
 
                     cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
@@ -363,19 +471,19 @@ namespace SAAS.Pages
 
 
 
-                    cell = PhraseCell(new Phrase("تفاصيل اخر المستجدات", fsmall), PdfPCell.ALIGN_CENTER);
+                    cell = PhraseCell(new Phrase("التاريخ", fsmall), PdfPCell.ALIGN_CENTER);
                     cell.BackgroundColor = GrayColor.LIGHT_GRAY;
 
                     cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
                     table.AddCell(cell);
 
-                    cell = PhraseCell(new Phrase("القسم", f), PdfPCell.ALIGN_CENTER);
+                    cell = PhraseCell(new Phrase("المبلغ", f), PdfPCell.ALIGN_CENTER);
                     cell.BackgroundColor = GrayColor.LIGHT_GRAY;
 
                     cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
                     table.AddCell(cell);
 
-                    cell = PhraseCell(new Phrase("المشروع", f), PdfPCell.ALIGN_CENTER);
+                    cell = PhraseCell(new Phrase("جهة الصرف", f), PdfPCell.ALIGN_CENTER);
                     cell.BackgroundColor = GrayColor.LIGHT_GRAY;
 
                     cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
@@ -396,38 +504,39 @@ namespace SAAS.Pages
                         counter++;
 
 
-                        phrase = new Phrase();
-                        cell = PhraseCell(new Phrase(row["Notes"].ToString(), fcontent), PdfPCell.ALIGN_CENTER);
-                        cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
-
-                        table.AddCell(cell);
+                       
 
 
 
 
                         phrase = new Phrase();
-                        cell = PhraseCell(new Phrase(row["UpdateDate"].ToString(), fcontent), PdfPCell.ALIGN_CENTER);
-                        cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
 
-                        table.AddCell(cell);
+                        string app = "تمت الموافقة";
+                        if(row["Approved"].ToString().Equals("0"))
+                            app = "لم تتم الموافقة بعد";
 
-
-                        phrase = new Phrase();
-                        cell = PhraseCell(new Phrase(row["TheUpdate"].ToString(), fcontent), PdfPCell.ALIGN_CENTER);
+                        cell = PhraseCell(new Phrase(app, fcontent), PdfPCell.ALIGN_CENTER);
                         cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
 
                         table.AddCell(cell);
 
 
                         phrase = new Phrase();
-                        cell = PhraseCell(new Phrase(row["Dep"].ToString(), fcontent), PdfPCell.ALIGN_CENTER);
+                        cell = PhraseCell(new Phrase(row["PaidDate"].ToString(), fcontent), PdfPCell.ALIGN_CENTER);
                         cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
 
                         table.AddCell(cell);
 
 
                         phrase = new Phrase();
-                        cell = PhraseCell(new Phrase(row["ProjectName"].ToString(), fcontent), PdfPCell.ALIGN_CENTER);
+                        cell = PhraseCell(new Phrase(MyStringManager.GetNumberWithComas(row["Amount"].ToString()), fcontent), PdfPCell.ALIGN_CENTER);
+                        cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
+
+                        table.AddCell(cell);
+
+
+                        phrase = new Phrase();
+                        cell = PhraseCell(new Phrase(row["PaidTo"].ToString(), fcontent), PdfPCell.ALIGN_CENTER);
                         cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
 
                         table.AddCell(cell);
@@ -604,6 +713,20 @@ namespace SAAS.Pages
 
                 }
 
+            }
+            PdfPCell ImageCell(string path, float scale, int align)
+            {
+
+
+                iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(HttpContext.Current.Server.MapPath(path));
+                image.ScalePercent(scale);
+                PdfPCell cell = new PdfPCell(image);
+                cell.BorderColor = BaseColor.WHITE;
+                cell.VerticalAlignment = PdfPCell.ALIGN_TOP;
+                cell.HorizontalAlignment = align;
+                cell.PaddingBottom = 0f;
+                cell.PaddingTop = 0f;
+                return cell;
             }
 
         }

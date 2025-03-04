@@ -91,19 +91,22 @@
 <i class="fa-solid fa-file-invoice-dollar"></i></p>
         
         
-
            <div class="row ">
-            <div class="col-4">
-                 <asp:Label  runat ="server" ID ="TotalAmount" Text="" ></asp:Label>
+        
+          
 
-</div>   <div class="col-4">
-                 <asp:Label  runat ="server" ID ="TotalApproved" Text="" ></asp:Label>
+            <div class="col-11 m-5 ">
+                     <span class="tag is-primary  is-large"  style="background-color:gray;"    >  <asp:Label class="label align-text-top " Font-Size="X-Large"  style=" margin-right:1em ; color:white;"  runat="server" ID="TotalAmount" Text="1"></asp:Label></span>
+                     <span class="tag is-primary  is-large"  style="background-color:gray;"    >  <asp:Label class="label align-text-top " Font-Size="X-Large"  style=" margin-right:1em ; color:white;"  runat="server" ID="TotalApproved" Text="1"></asp:Label></span>
+                     <span class="tag is-primary  is-large"  style="background-color:gray;"    >  <asp:Label class="label align-text-top " Font-Size="X-Large"  style=" margin-right:1em ; color:white;"  runat="server" ID="TotalNonApproved" Text="1"></asp:Label></span>
+      
+                </div>
+                </div>
 
-</div>   <div class="col-4">
-                 <asp:Label  runat ="server" ID ="TotalNonApproved" Text="" ></asp:Label>
 
-</div>
-</div>
+
+
+   
 
  
      <div class="row ">
@@ -136,17 +139,17 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
                 </asp:TemplateField>  
                 
                 
-                     <asp:TemplateField  ItemStyle-HorizontalAlign="Center" >
+                     <asp:TemplateField  ItemStyle-HorizontalAlign="Center"   >
                     <ItemTemplate>
                      <asp:Button
-                                    style="Width:6.5rem; Height:2rem;padding-bottom:1em;padding-top:0.3em;  font-size:1rem;"  
+                                    style="Width:8rem; Height:2rem;padding-bottom:1em;padding-top:0.3em;  font-size:1rem;"  
                                     
                                   
-                                    class='<%# Eval("Finished").ToString() == "0" ? "js-modal-trigger button is-danger is-outlined" :"js-modal-trigger button is-primary is-outlined"  %>' 
+                                    class='<%# Eval("Approved").ToString() == "0" ? "js-modal-trigger button is-danger is-outlined" :"js-modal-trigger button is-primary is-outlined"  %>' 
                                     ID="checkedBtn" runat="server" 
                                     onclick="PaidCheck"
 
-                                    ToolTip=' <%# ((Eval("ID"))) %> ' Text='<%# Eval("Approved").ToString() == "0" ? "تحويل الى موافق عليها" :"تحويل الى غير موافق عليها"  %>'> </asp:Button>
+                                    ToolTip=' <%# ((Eval("ID"))) %> '  Text='<%# Eval("Approved").ToString() == "0" ? "تحويل الى موافق عليها" :"تحويل الى غير موافق عليها"  %>'> </asp:Button>
                     </ItemTemplate>
             
                 </asp:TemplateField>
@@ -189,9 +192,9 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
                     </ItemTemplate>
                 </asp:TemplateField> 
                     
-                  <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="true" HeaderText="جهة الصرف">
+                  <asp:TemplateField   ItemStyle-HorizontalAlign="Center"  Visible="true" HeaderText="جهة الصرف">
                     <ItemTemplate>
-                        <asp:Label  ID="lbl_OR3" runat="server" Text='<%#Eval("PaidTo") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
+                        <asp:Label   ID="lbl_OR3" runat="server" Width="20 em" Text='<%#Eval("PaidTo") %>' Font-Bold="true" Font-Size="Medium" ></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>   
 
