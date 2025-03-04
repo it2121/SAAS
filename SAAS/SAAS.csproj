@@ -78,6 +78,8 @@
     <Content Include="Pages\EMainPage.aspx" />
     <Content Include="Pages\EMainPageEditor.aspx" />
     <Content Include="Pages\EMainPageView.aspx" />
+    <Content Include="Pages\Finance.aspx" />
+    <Content Include="Pages\FinanceEditor.aspx" />
     <Content Include="Pages\Updates.aspx" />
     <Content Include="Pages\UpdatesEditor.aspx" />
     <Content Include="Pages\UpdatesView.aspx" />
@@ -119,6 +121,20 @@
     <Compile Include="Pages\EMainPageView.aspx.designer.cs">
       <DependentUpon>EMainPageView.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Finance.aspx.cs">
+      <DependentUpon>Finance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Finance.aspx.designer.cs">
+      <DependentUpon>Finance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\FinanceEditor.aspx.cs">
+      <DependentUpon>FinanceEditor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\FinanceEditor.aspx.designer.cs">
+      <DependentUpon>FinanceEditor.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Main.Master.cs">
       <DependentUpon>Main.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -126,6 +142,7 @@
     <Compile Include="Pages\Main.Master.designer.cs">
       <DependentUpon>Main.Master</DependentUpon>
     </Compile>
+    <Compile Include="Pages\MyStringManager.cs" />
     <Compile Include="Pages\Updates.aspx.cs">
       <DependentUpon>Updates.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

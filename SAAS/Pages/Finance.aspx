@@ -1,6 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/Main.Master" AutoEventWireup="true" CodeBehind="EMainPage.aspx.cs" Inherits="SAAS.Pages.EMainPage" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/Main.Master" AutoEventWireup="true" CodeBehind="Finance.aspx.cs" Inherits="SAAS.Pages.Finance" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-       <script type="text/javascript">
+           <script type="text/javascript">
 
                $(document).ready(function () {
 
@@ -13,10 +13,10 @@
                    $('.table1').DataTable();
                });
 
-       </script>
+           </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-        <asp:Panel runat="server" ID="Panel1">
+      <asp:Panel runat="server" ID="Panel1">
         <div class="row " style="margin-bottom: 1em">
                  
                 
@@ -27,13 +27,13 @@
 
 
 
-     <asp:LinkButton  runat="server"  ID="AddnewBtn" style="background-color: white; color: #33B3FF; font: bold; border-color:#33B3FF" text="اضافة فقرة اعمال جديدة "
+     <asp:LinkButton  runat="server"  ID="AddnewBtn" style="background-color: white; color: #33B3FF; font: bold; border-color:#33B3FF" text="اضافة قيد صرف جديد"
         
          
          data-target="modal-js-example"
                                  onclick="GoToNewItem"
 
-                        class="js-modal-trigger button is-fullwidth  align align-content-center  button is-ou">اضافة فقرة اعمال جديدة 
+                        class="js-modal-trigger button is-fullwidth  align align-content-center  button is-ou">اضافة قيد صرف جديد 
                        
                         <i class="fas fa-add " style="margin-left: 1em">
 
@@ -66,7 +66,7 @@
          data-target="modal-js-example"
                                  onclick="GetExtendedReport"
 
-                        class="js-modal-trigger button is-fullwidth  align align-content-center  button is-ou">سحب تقرير مفصل 
+                        class="js-modal-trigger button is-fullwidth  align align-content-center  button is-ou">سحب تقرير 
                         <i class="fas fa-file-export " style="margin-left: 1em">
 
                         </i></asp:LinkButton>
@@ -76,25 +76,7 @@
                 </div>
             </div>
                     
-                              <div class="col-auto">
-                <div class="field buttons align-items-end">
-
-                       <asp:LinkButton  runat="server"  ID="LinkButton2" style="background-color: #e1ffc5; color: #33B3FF; font: bold; border-color:#33B3FF" text="اضافة فقرة اعمال جديدة "
-        
-         
-         data-target="modal-js-example"
-                                 onclick="GetSummationReport"
-
-                        class="js-modal-trigger button is-fullwidth  align align-content-center  button is-ou">سحب تقرير تلخيصي
-                       
-                        <i class="fas fa-file-export " style="margin-left: 1em">
-
-                        </i></asp:LinkButton>
-
-
-
-                </div>
-            </div>
+                    
                 </div>
             </div>
 
@@ -105,11 +87,24 @@
     
   
     <article class="panel is-info" style="background-color: white;padding-bottom:2em;">
-        <p class="panel-heading text-center" style="background-color:#3399ff;">                <asp:Label  runat ="server" ID ="PageProjectNameLbl" Text="جدول اعمال شركة الصومعة" ></asp:Label>
+        <p class="panel-heading text-center" style="background-color:#3399ff;">                <asp:Label  runat ="server" ID ="PageProjectNameLbl" Text="جدول الصرفيات الخاصة بدكتور اسماعيل" ></asp:Label>
 <i class="fa-solid fa-file-invoice-dollar"></i></p>
         
         
-          
+
+           <div class="row ">
+            <div class="col-4">
+                 <asp:Label  runat ="server" ID ="TotalAmount" Text="" ></asp:Label>
+
+</div>   <div class="col-4">
+                 <asp:Label  runat ="server" ID ="TotalApproved" Text="" ></asp:Label>
+
+</div>   <div class="col-4">
+                 <asp:Label  runat ="server" ID ="TotalNonApproved" Text="" ></asp:Label>
+
+</div>
+</div>
+
  
      <div class="row ">
         
@@ -151,25 +146,13 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
                                     ID="checkedBtn" runat="server" 
                                     onclick="PaidCheck"
 
-                                    ToolTip=' <%# ((Eval("ID"))) %> ' Text='<%# Eval("Finished").ToString() == "0" ? "تحويل الى مكتملة" :"تحويل الى غير مكتملة"  %>'> </asp:Button>
+                                    ToolTip=' <%# ((Eval("ID"))) %> ' Text='<%# Eval("Approved").ToString() == "0" ? "تحويل الى موافق عليها" :"تحويل الى غير موافق عليها"  %>'> </asp:Button>
                     </ItemTemplate>
             
                 </asp:TemplateField>
 
                 
-                  <asp:TemplateField  ItemStyle-HorizontalAlign="Center" >
-                    <ItemTemplate>
-                        <asp:Button Font-Bold="true"
-                                                                class="js-modal-trigger button  is-bold is-primary is-outlined"
-                                    style="Width:50%; Height:25px"  
-
-                            CommandArgument='<%#Eval("ID") %>' CommandName="GoToUpdate"
-
-
-                            ID="btn_Edit1" runat="server" Text="التحديثات"  />
-                    </ItemTemplate>
-            
-                </asp:TemplateField>
+               
                 
                       <asp:TemplateField  ItemStyle-HorizontalAlign="Center" >
                     <ItemTemplate>
@@ -182,55 +165,44 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
             
                 </asp:TemplateField>
 
-                  <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="true" HeaderText="الملاحظات">
-                    <ItemTemplate>
-                        <asp:Label  ID="lbl_Quant" runat="server" Text='<%#Eval("Notes") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>   
+               
 
               
 
 
 
-                <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="false" HeaderText="مكتمل">
+                <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="false" HeaderText="تمت الموافقة">
                     <ItemTemplate>
-                        <asp:Label  ID="lbl_Quansgt" runat="server" Text='<%#Eval("Finished") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
+                        <asp:Label  ID="lbl_Quansgt" runat="server" Text='<%#Eval("Approved") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>   
 
 
-                 <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="true" HeaderText="تاريخ اخر تحديث">
+                 <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="true" HeaderText="تاريخ الصرف">
                     <ItemTemplate>
-                        <asp:Label  ID="lbl_ORusys" runat="server" Text='<%#Eval("UpdateDate") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
+                        <asp:Label  ID="lbl_ORusys" runat="server" Text='<%#Eval("PaidDate") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField> 
-                 <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="true" HeaderText="اخر تحديث">
+                 <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="true" HeaderText="المبلغ">
                     <ItemTemplate>
-                        <asp:Label  ID="lbl_OR" runat="server" Text='<%#Eval("TheUpdate") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
+                        <asp:Label  ID="lbl_OR" runat="server" Text='<%#Eval("Amount") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField> 
                     
-                  <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="true" HeaderText="القسم">
+                  <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="true" HeaderText="جهة الصرف">
                     <ItemTemplate>
-                        <asp:Label  ID="lbl_OR3" runat="server" Text='<%#Eval("Dep") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
+                        <asp:Label  ID="lbl_OR3" runat="server" Text='<%#Eval("PaidTo") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>   
 
-                
-                <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="true" HeaderText="اسم المشروع">
-                    <ItemTemplate>
-                        <asp:Label  ID="lbl_OR4" runat="server" Text='<%#Eval("ProjectName") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>   
-
-
-
-
-                   <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="true" HeaderText="ت">
+                      <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="true" HeaderText="ت">
                     <ItemTemplate>
                         <asp:Label  ID="lbl_OR4Ord" runat="server" Text='<%#Eval("Ord") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>   
+                 
+
+
                  
    
                 
@@ -282,10 +254,5 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
                      new DataTable.Responsive(table);
 
                  </script>
-
-
-
-
-
 
 </asp:Content>

@@ -46,6 +46,19 @@ namespace SAAS.Pages
         
         
         
+        public static DataTable GetAllFinance()
+        {
+
+
+            SqlCommand cm;
+            cm = DDAALL.CreateCommand();
+            cm.CommandText = "GetAllFinance";
+
+
+
+            SqlConnection.ClearAllPools();
+            return DDAALL.ExecuteSelectCommand(cm);
+        }    
         public static DataTable GetAllMainRecord()
         {
 
@@ -73,7 +86,20 @@ namespace SAAS.Pages
             SqlConnection.ClearAllPools();
             return DDAALL.ExecuteSelectCommand(cm);
         }  
-        public static DataTable GetSubRecordByID(int ID)
+        public static DataTable GetFinanceByID(int ID)
+        {
+
+
+            SqlCommand cm;
+            cm = DDAALL.CreateCommand();
+            cm.CommandText = "GetFinanceByID";
+
+            cm.Parameters.AddWithValue("@ID", ID);
+
+
+            SqlConnection.ClearAllPools();
+            return DDAALL.ExecuteSelectCommand(cm);
+        } public static DataTable GetSubRecordByID(int ID)
         {
 
 
@@ -118,8 +144,49 @@ namespace SAAS.Pages
             return DDAALL.ExecuteSelectCommand(cm);
         }
        
+     
+        public static bool DeleteFromFinance(int ID)
+
+        {
+            SqlCommand cm;
+            cm = DDAALL.CreateCommand();
+            if (cm == null) { return false; }
+            cm.CommandText = "DeleteFromFinance";
+
+
+            cm.Parameters.AddWithValue("@ID", ID);
+    
+
+
+
+            SqlConnection.ClearAllPools();
+            return DDAALL.ExecuteCommand(cm);
+
+
+
+        }   public static bool SetFinanceAproved(int ID)
+
+        {
+            SqlCommand cm;
+            cm = DDAALL.CreateCommand();
+            if (cm == null) { return false; }
+            cm.CommandText = "SetFinanceAproved";
+
+
+            cm.Parameters.AddWithValue("@ID", ID);
+    
+
+
+
+            SqlConnection.ClearAllPools();
+            return DDAALL.ExecuteCommand(cm);
+
+
+
+        }
+
         public static bool UpdateMainRecord(string ProjectName,
-           string Dep,int ID,string Ord)
+         string Dep, int ID, string Ord)
 
         {
             SqlCommand cm;
@@ -132,6 +199,57 @@ namespace SAAS.Pages
             cm.Parameters.AddWithValue("@Dep", Dep);
             cm.Parameters.AddWithValue("@ID", ID);
             cm.Parameters.AddWithValue("@Ord", Ord);
+
+
+
+
+            SqlConnection.ClearAllPools();
+            return DDAALL.ExecuteCommand(cm);
+
+
+
+        }
+
+        public static bool UpdateFinance(string PaidTo,
+           float Amount, string PaidDate, string Ord , int ID)
+
+        {
+            SqlCommand cm;
+            cm = DDAALL.CreateCommand();
+            if (cm == null) { return false; }
+            cm.CommandText = "UpdateFinance";
+
+
+            cm.Parameters.AddWithValue("@PaidTo", PaidTo);
+            cm.Parameters.AddWithValue("@Amount", Amount);
+            cm.Parameters.AddWithValue("@PaidDate", PaidDate);
+            cm.Parameters.AddWithValue("@Ord", Ord);
+            cm.Parameters.AddWithValue("@ID", ID);
+    
+
+
+
+            SqlConnection.ClearAllPools();
+            return DDAALL.ExecuteCommand(cm);
+
+
+
+        }    public static bool InsertIntoFinance(string PaidTo,
+           float Amount, string PaidDate,string Ord)
+
+        {
+            SqlCommand cm;
+            cm = DDAALL.CreateCommand();
+            if (cm == null) { return false; }
+            cm.CommandText = "InsertIntoFinance";
+
+
+            cm.Parameters.AddWithValue("@PaidTo", PaidTo);
+            cm.Parameters.AddWithValue("@Amount", Amount);
+            cm.Parameters.AddWithValue("@PaidDate", PaidDate);
+            cm.Parameters.AddWithValue("@Approved", "0");
+            cm.Parameters.AddWithValue("@Ord", Ord);
+    
     
 
 
