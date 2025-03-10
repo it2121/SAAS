@@ -118,6 +118,11 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
                     <ItemTemplate>
                         <asp:Label ID="lbl_ID" runat="server" Text='<%#Eval("ID") %>'></asp:Label>
                     </ItemTemplate>
+                </asp:TemplateField> 
+                <asp:TemplateField ItemStyle-HorizontalAlign="Center" Visible="false" HeaderText="ID">
+                    <ItemTemplate>
+                        <asp:Label ID="lbl_Color" runat="server" Text='<%#Eval("Color") %>'></asp:Label>
+                    </ItemTemplate>
                 </asp:TemplateField>    
                        <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="true" HeaderText="ت">
                     <ItemTemplate>
@@ -157,7 +162,7 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
                       <asp:TemplateField  ItemStyle-HorizontalAlign="Center" >
                     <ItemTemplate>
                         <asp:Button 
-                                      Font-Bold="true"                          class="js-modal-trigger button  is-bold is-info is-outlined"
+                                      Font-Bold="true"                          class="js-modal-trigger button  is-bold is-info "
                                     style="Width:50%; Height:25px"  
 
                             ID="btn_Edit" runat="server" Text="تعديل" CommandName="Edit" />

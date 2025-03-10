@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -72,7 +73,51 @@ namespace SAAS.Pages
 
 
         }
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
 
+
+            try
+            {
+                if (e.Row.RowType == DataControlRowType.DataRow)
+                {
+
+                    //Label Finished = (e.Row.FindControl("lbl_Quansgt") as Label);
+                    Label ColorLbl = (e.Row.FindControl("lbl_Color") as Label);
+
+                  //  bool FinishedBool = Finished.Text.Equals("1");
+
+
+                    e.Row.BackColor = Color.FromName(ColorLbl.Text);
+
+
+                    /*    if (FinishedBool)
+                        {
+                            e.Row.BackColor = Color.FromName("#e6ffe3");
+
+
+                        }
+                        else
+                        {
+                            e.Row.BackColor = Color.FromName("#ffe3e3");
+
+
+
+
+
+                        }
+    */
+
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+
+
+
+
+        }
         protected void MyGridView_OnRowCommand(object sender, GridViewCommandEventArgs e)
         {
 
@@ -85,11 +130,7 @@ namespace SAAS.Pages
         {
         
         }
-        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            
-              
-        }
+     
 
     }
 }

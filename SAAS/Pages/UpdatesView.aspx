@@ -108,7 +108,11 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
                         <asp:Label ID="lbl_ID" runat="server" Text='<%#Eval("ID") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>    
-                
+                        <asp:TemplateField ItemStyle-HorizontalAlign="Center" Visible="false" HeaderText="ID">
+                    <ItemTemplate>
+                        <asp:Label ID="lbl_Color" runat="server" Text='<%#Eval("Color") %>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>  
                        <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="true" HeaderText="ت">
                     <ItemTemplate>
                         <asp:Label  ID="lbl_OR4Ord" runat="server" Text='<%#Eval("Ord") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -38,7 +39,9 @@ namespace SAAS.Pages
 
 
                         UpdateDate.Text = dt["UpdateDate"].ToString();
-                        Ord.Text = dt["Ord"].ToString(); 
+                        Ord.Text = dt["Ord"].ToString();
+                        DropDownList1.SelectedItem.Value = dt["Color"].ToString(); 
+                        DropDownList1.BackColor = ColorTranslator.FromHtml(dt["Color"].ToString()); 
 
 
 
@@ -95,7 +98,7 @@ namespace SAAS.Pages
 
 
 
-                BBAALL.InsertIntoSubRecord(MainRecordID, TheUpdate.Text, Notes.Text, UpdateDate.Text, Ord.Text);
+                BBAALL.InsertIntoSubRecord(MainRecordID, TheUpdate.Text, Notes.Text, MyStringManager.GetDateAfterCheckingFormating(UpdateDate.Text) , Ord.Text, DropDownList1.SelectedValue);
 
 
 
@@ -107,7 +110,7 @@ namespace SAAS.Pages
             {
 
 
-                BBAALL.UpdateSubRecord(MainRecordID, TheUpdate.Text, Notes.Text, ID, UpdateDate.Text, Ord.Text);
+                BBAALL.UpdateSubRecord(MainRecordID, TheUpdate.Text, Notes.Text, ID, MyStringManager.GetDateAfterCheckingFormating(UpdateDate.Text), Ord.Text, DropDownList1.SelectedValue);
 
 
 
@@ -117,6 +120,7 @@ namespace SAAS.Pages
 
             }
         }
+
         protected void DelProv(object sender, EventArgs e)
         {
 

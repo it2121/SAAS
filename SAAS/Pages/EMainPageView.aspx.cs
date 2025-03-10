@@ -42,26 +42,30 @@ namespace SAAS.Pages
                 {
 
                     Label Finished = (e.Row.FindControl("lbl_Quansgt") as Label);
+                    Label ColorLbl = (e.Row.FindControl("lbl_Color") as Label);
 
                     bool FinishedBool = Finished.Text.Equals("1");
 
 
-                    if (FinishedBool)
-                    {
-                        e.Row.BackColor = Color.FromName("#e6ffe3");
+                    e.Row.BackColor = Color.FromName(ColorLbl.Text);
 
 
-                    }
-                    else
-                    {
-                        e.Row.BackColor = Color.FromName("#ffe3e3");
+                    /*    if (FinishedBool)
+                        {
+                            e.Row.BackColor = Color.FromName("#e6ffe3");
+
+
+                        }
+                        else
+                        {
+                            e.Row.BackColor = Color.FromName("#ffe3e3");
 
 
 
 
 
-                    }
-
+                        }
+    */
 
                 }
             }
@@ -367,6 +371,8 @@ namespace SAAS.Pages
                         phrase = new Phrase();
                         cell = PhraseCell(new Phrase(row["Notes"].ToString(), fcontent), PdfPCell.ALIGN_CENTER);
                         cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
+                        Color cc = ColorTranslator.FromHtml(row["Color"].ToString());
+                        cell.BackgroundColor = new BaseColor(Convert.ToInt16(cc.R), Convert.ToInt16(cc.G), Convert.ToInt16(cc.B));
 
                         table.AddCell(cell);
 
@@ -376,6 +382,8 @@ namespace SAAS.Pages
                         phrase = new Phrase();
                         cell = PhraseCell(new Phrase(row["UpdateDate"].ToString(), fcontent), PdfPCell.ALIGN_CENTER);
                         cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
+                         cc = ColorTranslator.FromHtml(row["Color"].ToString());
+                        cell.BackgroundColor = new BaseColor(Convert.ToInt16(cc.R), Convert.ToInt16(cc.G), Convert.ToInt16(cc.B));
 
                         table.AddCell(cell);
 
@@ -383,6 +391,8 @@ namespace SAAS.Pages
                         phrase = new Phrase();
                         cell = PhraseCell(new Phrase(row["TheUpdate"].ToString(), fcontent), PdfPCell.ALIGN_CENTER);
                         cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
+                        cc = ColorTranslator.FromHtml(row["Color"].ToString());
+                        cell.BackgroundColor = new BaseColor(Convert.ToInt16(cc.R), Convert.ToInt16(cc.G), Convert.ToInt16(cc.B));
 
                         table.AddCell(cell);
 
@@ -390,6 +400,8 @@ namespace SAAS.Pages
                         phrase = new Phrase();
                         cell = PhraseCell(new Phrase(row["Dep"].ToString(), fcontent), PdfPCell.ALIGN_CENTER);
                         cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
+                        cc = ColorTranslator.FromHtml(row["Color"].ToString());
+                        cell.BackgroundColor = new BaseColor(Convert.ToInt16(cc.R), Convert.ToInt16(cc.G), Convert.ToInt16(cc.B));
 
                         table.AddCell(cell);
 
@@ -397,6 +409,8 @@ namespace SAAS.Pages
                         phrase = new Phrase();
                         cell = PhraseCell(new Phrase(row["ProjectName"].ToString(), fcontent), PdfPCell.ALIGN_CENTER);
                         cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
+                        cc = ColorTranslator.FromHtml(row["Color"].ToString());
+                        cell.BackgroundColor = new BaseColor(Convert.ToInt16(cc.R), Convert.ToInt16(cc.G), Convert.ToInt16(cc.B));
 
                         table.AddCell(cell);
 
@@ -404,6 +418,8 @@ namespace SAAS.Pages
                         phrase = new Phrase();
                         cell = PhraseCell(new Phrase(counter + "", fcontent), PdfPCell.ALIGN_CENTER);
                         cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
+                        cc = ColorTranslator.FromHtml(row["Color"].ToString());
+                        cell.BackgroundColor = new BaseColor(Convert.ToInt16(cc.R), Convert.ToInt16(cc.G), Convert.ToInt16(cc.B));
 
                         table.AddCell(cell);
 

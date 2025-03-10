@@ -73,6 +73,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Data\Data.txt" />
+    <Content Include="Pages\ADNP.aspx" />
     <Content Include="Pages\BBAALL.aspx" />
     <Content Include="Pages\DDAALL.aspx" />
     <Content Include="Pages\EMainPage.aspx" />
@@ -86,6 +88,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pages\ADNP.aspx.cs">
+      <DependentUpon>ADNP.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\ADNP.aspx.designer.cs">
+      <DependentUpon>ADNP.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\BBAALL.aspx.cs">
       <DependentUpon>BBAALL.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -130,13 +130,17 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
                     </ItemTemplate>
                 </asp:TemplateField>   
                 
-
+                   <asp:TemplateField ItemStyle-HorizontalAlign="Center" Visible="false" HeaderText="ID">
+                    <ItemTemplate>
+                        <asp:Label ID="lbl_Color" runat="server" Text='<%#Eval("Color") %>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>  
 
 
                   <asp:TemplateField  ItemStyle-HorizontalAlign="Center" >
                     <ItemTemplate>
                         <asp:Button Font-Bold="true"
-                                                                class="js-modal-trigger button  is-bold is-primary is-outlined"
+                                                                class="js-modal-trigger button  is-bold is-primary "
                                     style="Width:50%; Height:25px"  
 
                             CommandArgument='<%#Eval("ID") %>' CommandName="GoToUpdate"

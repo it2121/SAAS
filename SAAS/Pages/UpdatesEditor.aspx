@@ -176,6 +176,22 @@
     <label for="name" class="form__label">الملاحظات</label>
 </div>
 </div>
+    <div class="col-12">
+
+
+           
+                         <div class="form__group field">
+<asp:DropDownList  class="form__field mt-2 is-large" Font-Size="XX-Large" ID="DropDownList1" runat="server" onchange="SetDropDownListColor(this);">
+    <asp:ListItem style="background-color: #ffffff !important;"  Value="#ffffff">#ffffff</asp:ListItem>
+    <asp:ListItem style="background-color: #ffd257 !important;" Value="#ffd257">#ffd257</asp:ListItem>
+    <asp:ListItem style="background-color: #ff7a7a !important;" Value="#ff7a7a">#ff7a7a</asp:ListItem>
+    <asp:ListItem style="background-color: #a8b4ff !important;" Value="#a8b4ff">#a8b4ff</asp:ListItem>
+    <asp:ListItem style="background-color: #a8fff3 !important;" Value="#a8fff3">#a8fff3</asp:ListItem>
+    <asp:ListItem style="background-color: #ed47ff !important;" Value="#ed47ff">#ed47ff</asp:ListItem>
+    <asp:ListItem style="background-color: #4eff47 !important;" Value="#4eff47">#4eff47</asp:ListItem>
+</asp:DropDownList>
+</div>
+</div>
 
 
    
@@ -217,6 +233,45 @@
             return confirm("هل انت متاكد, سوف تحذف البيانات نهائياً?");
         }</script>
 
+
+
+    <script>
+
+        function SetDropDownListColor(ddl) {
+            for (var i = 0; i < ddl.options.length; i++) {
+                if (ddl.options[i].selected) {
+                    switch (i) {
+                        case 0:
+                            ddl.style.backgroundColor = '#ffffff';
+                            return;
+
+                        case 1:
+                            ddl.style.backgroundColor = '#ffd257';
+                            return;
+
+                        case 2:
+                            ddl.style.backgroundColor = '#ff7a7a';
+                            return;
+
+                        case 3:
+                            ddl.style.backgroundColor = '#a8b4ff';
+                            return;
+
+                        case 4:
+                            ddl.style.backgroundColor = '#a8fff3';
+                            return;
+                        case 5:
+                            ddl.style.backgroundColor = '#ed47ff';
+                            return;
+                        case 6:
+                            ddl.style.backgroundColor = '#4eff47';
+                            return;
+                    }
+                }
+            }
+        }
+
+    </script>
 
 
 

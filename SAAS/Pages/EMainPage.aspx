@@ -139,7 +139,11 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
                         <asp:Label ID="lbl_ID" runat="server" Text='<%#Eval("ID") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>  
-                
+                   <asp:TemplateField ItemStyle-HorizontalAlign="Center" Visible="false" HeaderText="ID">
+                    <ItemTemplate>
+                        <asp:Label ID="lbl_Color" runat="server" Text='<%#Eval("Color") %>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>  
                 
                      <asp:TemplateField  ItemStyle-HorizontalAlign="Center" >
                     <ItemTemplate>
@@ -147,7 +151,7 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
                                     style="Width:6.5rem; Height:2rem;padding-bottom:1em;padding-top:0.3em;  font-size:1rem;"  
                                     
                                   
-                                    class='<%# Eval("Finished").ToString() == "0" ? "js-modal-trigger button is-danger is-outlined" :"js-modal-trigger button is-primary is-outlined"  %>' 
+                                    class='<%# Eval("Finished").ToString() == "0" ? "js-modal-trigger button is-danger " :"js-modal-trigger button is-primary "  %>' 
                                     ID="checkedBtn" runat="server" 
                                     onclick="PaidCheck"
 
@@ -160,8 +164,8 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
                   <asp:TemplateField  ItemStyle-HorizontalAlign="Center" >
                     <ItemTemplate>
                         <asp:Button Font-Bold="true"
-                                                                class="js-modal-trigger button  is-bold is-primary is-outlined"
-                                    style="Width:50%; Height:25px"  
+                                                                class="js-modal-trigger button  is-bold is-primary "
+                                    style="Width:60%; Height:25px"  
 
                             CommandArgument='<%#Eval("ID") %>' CommandName="GoToUpdate"
 
@@ -174,7 +178,7 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
                       <asp:TemplateField  ItemStyle-HorizontalAlign="Center" >
                     <ItemTemplate>
                         <asp:Button 
-                                      Font-Bold="true"                          class="js-modal-trigger button  is-bold is-info is-outlined"
+                                      Font-Bold="true"                          class="js-modal-trigger button  is-bold is-info "
                                     style="Width:50%; Height:25px"  
 
                             ID="btn_Edit" runat="server" Text="تعديل" CommandName="Edit" />

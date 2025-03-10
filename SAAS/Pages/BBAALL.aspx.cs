@@ -263,7 +263,7 @@ namespace SAAS.Pages
         
         
         
-        public static bool UpdateSubRecord(int MainRecordID, string TheUpdate, string Notes,int ID ,string UpdateDate ,string Ord)
+        public static bool UpdateSubRecord(int MainRecordID, string TheUpdate, string Notes,int ID ,string UpdateDate ,string Ord,string Color)
 
         {
             SqlCommand cm;
@@ -276,6 +276,7 @@ namespace SAAS.Pages
             cm.Parameters.AddWithValue("@ID", ID);
             cm.Parameters.AddWithValue("@UpdateDate", UpdateDate);
             cm.Parameters.AddWithValue("@Ord", Ord);
+            cm.Parameters.AddWithValue("@Color", Color);
             SqlConnection.ClearAllPools();
             return DDAALL.ExecuteCommand(cm);
 
@@ -283,7 +284,7 @@ namespace SAAS.Pages
         }  
            
                  
-        public static bool InsertIntoSubRecord(int MainRecordID, string TheUpdate, string Notes,string UpdateDate,string Ord)
+        public static bool InsertIntoSubRecord(int MainRecordID, string TheUpdate, string Notes,string UpdateDate,string Ord,string Color)
 
         {
             SqlCommand cm;
@@ -295,6 +296,7 @@ namespace SAAS.Pages
             cm.Parameters.AddWithValue("@Notes", Notes);
             cm.Parameters.AddWithValue("@UpdateDate", UpdateDate);
             cm.Parameters.AddWithValue("@Ord", Ord);
+            cm.Parameters.AddWithValue("@Color", Color);
             SqlConnection.ClearAllPools();
             return DDAALL.ExecuteCommand(cm);
 
