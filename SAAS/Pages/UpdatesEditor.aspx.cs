@@ -61,7 +61,7 @@ namespace SAAS.Pages
                     TheUpdate.Text = "";
                     Notes.Text = "";
 
-                    UpdateDate.Text = DateTime.Now.ToString("MM/dd/yyyy");
+                    UpdateDate.Text = DateTime.Now.ToString("dd/MM/yyyy");
                     DataTable dt = BBAALL.GetAllSubRecordsOfMainRecord(MainRecordID);
                     int max = 0;
                     foreach(DataRow row in dt.Rows)

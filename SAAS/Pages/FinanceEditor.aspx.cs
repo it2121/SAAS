@@ -56,7 +56,7 @@ namespace SAAS.Pages
                     PaidTo.Text = "";
                     Amount.Text = "0";
                     PaidDate.Text = "";
-                    PaidDate.Text = DateTime.Now.ToString("MM/dd/yyyy");
+                    PaidDate.Text = DateTime.Now.ToString("dd/MM/yyyy");
 
 
                     DataTable dt = BBAALL.GetAllFinance();
