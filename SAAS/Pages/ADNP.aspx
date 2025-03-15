@@ -397,9 +397,21 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
                     <ItemTemplate>
                         <asp:Label  ID="lbl_IDInner" runat="server" Text='<%#Eval("Index") %>' Font-Bold="false" Font-Size="Small"></asp:Label>
                     </ItemTemplate>
-                </asp:TemplateField>   
+                </asp:TemplateField>
+                
 
-                <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="true" HeaderText="Date Created">
+                   <asp:TemplateField HeaderText="Date Created"   ItemStyle-HorizontalAlign="Center">
+                            <ItemTemplate>
+                                <asp:Label  style="word-wrap:break-word;max-width:25em; " Width="100%" ID="lbl_DateInner" runat="server" Text='<%#Eval("Date") %>'></asp:Label>
+                            </ItemTemplate>
+                            <EditItemTemplate>
+                                <asp:TextBox    style="word-wrap:break-word;max-width:100%;" ID="lbl_DateInner"  Width="100%" runat="server" Text='<%#Eval("Date") %>'></asp:TextBox>
+                           
+                            </EditItemTemplate>
+                        </asp:TemplateField>
+
+
+                <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="false" HeaderText="Date Created">
                     <ItemTemplate>
                         <asp:Label  ID="lbl_QuansgtInnerDate" runat="server" Text='<%#Eval("Date") %>' Font-Bold="true" Font-Size="Small"></asp:Label>
                     </ItemTemplate>
@@ -569,8 +581,21 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
                     </ItemTemplate>
                 </asp:TemplateField>   
 
-              
-                  <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="true" HeaderText="Date Created"> <HeaderStyle Width="10" />
+
+
+                   <asp:TemplateField HeaderText="Date Created"   ItemStyle-HorizontalAlign="Center">
+                            <ItemTemplate>
+                                <asp:Label  style="word-wrap:break-word;max-width:25em; " Width="100%" ID="lbl_Date" runat="server" Text='<%#Eval("Date") %>'></asp:Label>
+                            </ItemTemplate>
+                            <EditItemTemplate>
+                                <asp:TextBox    style="word-wrap:break-word;max-width:100%;" ID="txt_Date"  Width="100%" runat="server" Text='<%#Eval("Date") %>'></asp:TextBox>
+                           
+                            </EditItemTemplate>
+                        </asp:TemplateField>
+    
+
+
+                  <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="false" HeaderText="Date Created"> <HeaderStyle Width="10" />
 <ItemStyle Width="10" />
                     <ItemTemplate>
                         <asp:Label  ID="lbl_QuansgtDate" runat="server" Text='<%#Eval("Date") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>

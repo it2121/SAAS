@@ -80,6 +80,7 @@
     <Content Include="Pages\EMainPage.aspx" />
     <Content Include="Pages\EMainPageEditor.aspx" />
     <Content Include="Pages\EMainPageView.aspx" />
+    <Content Include="Pages\Error.html" />
     <Content Include="Pages\Finance.aspx" />
     <Content Include="Pages\FinanceEditor.aspx" />
     <Content Include="Pages\Updates.aspx" />

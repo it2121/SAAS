@@ -15,7 +15,8 @@ namespace SAAS.Pages
         DataTable Gdt = new DataTable();
         public static int InnerEditIndex = -1;
         public static int OutterEditIndex = -1;
-        public static int View =1;
+        public static int View = 1;
+        public static bool AddedNew = false;
         DateTime ArabiaTime = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(
    DateTime.UtcNow, "Arab Standard Time");
         protected void Page_Load(object sender, EventArgs e)
@@ -93,10 +94,28 @@ namespace SAAS.Pages
                 Gdt = GetList();
                 DataGridUsers.DataSource = Gdt;
                 DataGridUsers.DataBind();
+                if (Session["DocFullTypeName"] != null)
+                {
+                    PageProjectNameLbl.Text = Session["DocFullTypeName"].ToString();
+                }
+                else
+                {
 
-                PageProjectNameLbl.Text = Session["DocFullTypeName"].ToString();
+                    PageProjectNameLbl.Text = "Document Control";
+                }
                 InnerEditIndex = -1;
                 OutterEditIndex = -1;
+
+                if (AddedNew)
+                {
+
+
+                    DataGridUsers.EditIndex = Gdt.Rows.Count - 1;
+                    OutterEditIndex = Gdt.Rows.Count - 1;
+                    AddedNew = false;
+                    //GridView1.SetEditRow(e.NewEditIndex);
+                    reBindData();
+                }
 
             }
 
@@ -220,36 +239,27 @@ namespace SAAS.Pages
         {
 
 
-           
 
 
+            if (Session["DocType"] !=null)
+
+            { 
             string FileContent = "FU-" + Session["DocType"].ToString() + "-" + "HSE" + "-" + GetLastDocNumber() + "-" + ArabiaTime.Year.ToString() + "-" + "V" + "1" + "#" + "^" + ArabiaTime.ToString("dd/MM/yyyy") + "\n";
 
             File.AppendAllText(FilePath, FileContent);
+
+            AddedNew = true;
+            }
             refresh();
         }
 
         protected void SetDocTypeAndMoveOn(object sender, EventArgs e)
         {
-            Session["DocType"] = ((Button)sender).ToolTip;
+
+
+        
+                Session["DocType"] = ((Button)sender).ToolTip;
             Session["DocFullTypeName"] = ((Button)sender).Text;
-
-            //   Response.Write("<script>alert('"+((Button)sender).ToolTip+"');</script>");
-
-            //Dep.DocType = ((Button)sender).ToolTip;
-
-
-
-
-
-
-            /*     foreach (string line in File.ReadAllLines(FilePath))
-          {
-
-            //  Response.Write("<script>alert('" + line + "');</script>");
-
-          }*/
-
 
 
 
@@ -259,28 +269,6 @@ namespace SAAS.Pages
             setView(2);
 
 
-            /*  string FileContent = Session["DocType"].ToString() + "-" + "HSE" + "-" + GetLastDocNumber() + "-" + DateTime.Now.Year.ToString() + "-" + "V" + "1" + "#" + "\n";
-
-              File.AppendAllText(FilePath, FileContent);
-  */
-
-
-
-
-            // 
-
-
-
-
-
-
-
-
-
-
-
-
-            //  Response.Redirect("Dep.aspx");
 
 
             refresh();
@@ -300,6 +288,10 @@ namespace SAAS.Pages
 
                 foreach (GridViewRow row in DataGridUsers.Rows)
                 {
+
+
+                    if(Session["NameOfFile"] != null) {
+
                     string name = (row.FindControl("lbl_Quansgt") as Label).Text;
                     string nameFromSession = Session["NameOfFile"].ToString().Substring(0, Session["NameOfFile"].ToString().LastIndexOf("-"));
                     Session["NameOfFile"] = nameFromSession;
@@ -317,7 +309,7 @@ namespace SAAS.Pages
 
 
                     }
-
+                    }
 
 
 
@@ -344,8 +336,9 @@ namespace SAAS.Pages
 
 
             string[] Lines = File.ReadAllLines(FilePath);
+            if (Session["NameOfFile"] != null) { 
 
-            string name = Session["NameOfFile"].ToString();
+                string name = Session["NameOfFile"].ToString();
 
             DataTable dt = new DataTable();
             string[] MidLines = File.ReadAllLines(FilePath);
@@ -398,141 +391,145 @@ namespace SAAS.Pages
                 }
 
             }
+
             return dt;
+            }else { return null;}
         }
         public DataTable GetList()
         {
 
-            if(Session["DocType"] != null){ 
-            Session["DocType"].ToString();
-
-            DataTable dt = new DataTable();
-            string[] Lines = File.ReadAllLines(FilePath);
-            string[] MidLines = File.ReadAllLines(FilePath);
-            dt.Columns.Add("Index", typeof(System.String));
-            dt.Columns.Add("FileName", typeof(System.String));
-            dt.Columns.Add("Remarks", typeof(System.String));
-            dt.Columns.Add("VReached", typeof(System.String));
-            dt.Columns.Add("Date", typeof(System.String));
-            int counter = 1;
-
-
-            for (int i = 0; i < MidLines.Length; i++)
+            if (Session["DocType"] != null)
             {
-                if (MidLines[i].Length > 0)
+                Session["DocType"].ToString();
+
+                DataTable dt = new DataTable();
+                string[] Lines = File.ReadAllLines(FilePath);
+                string[] MidLines = File.ReadAllLines(FilePath);
+                dt.Columns.Add("Index", typeof(System.String));
+                dt.Columns.Add("FileName", typeof(System.String));
+                dt.Columns.Add("Remarks", typeof(System.String));
+                dt.Columns.Add("VReached", typeof(System.String));
+                dt.Columns.Add("Date", typeof(System.String));
+                int counter = 1;
+
+
+                for (int i = 0; i < MidLines.Length; i++)
                 {
-                    MidLines[i] = MidLines[i].Substring(0, MidLines[i].IndexOf("V"));
-                }
-            }
-            string[] DistinctLines = MidLines.Distinct().ToArray();
-
-
-            for (int i = 0; i < DistinctLines.Length; i++)
-            {
-                if (DistinctLines[i].Length > 0)
-                {
-
-                    string FileName = "";
-                    string Remarks = "";
-                    string VReached = "";
-                    string Date = "";
-
-
-                    string str = DistinctLines[i].Substring(0, DistinctLines[i].LastIndexOf("-"));
-                    str = str.Substring(0, str.LastIndexOf("-"));
-                    str = str.Substring(0, str.LastIndexOf("-"));
-                    str = str.Substring(0, str.LastIndexOf("-"));
-                    str = str.Substring(str.IndexOf("-") + 1);
-                    //  ShowMessage(str);
-
-                    // str = str.Substring(0, str.IndexOf("-"));
-                    if (Session["DocType"].ToString().Equals(str))
+                    if (MidLines[i].Length > 0)
                     {
-                        foreach (string line in Lines)
-                        {
-
-
-                            if (DistinctLines[i].Equals(line.Substring(0, line.IndexOf("V"))))
-                            {
-
-                                // FileName = line.Substring(0, line.IndexOf("#"));
-                                FileName = line.Substring(0, line.LastIndexOf("-"));
-                                Remarks = line.Substring(line.IndexOf("#") + 1);
-                                Remarks = Remarks.Substring(0, Remarks.LastIndexOf("^"));
-                                Date = line.Substring(line.IndexOf("^") + 1);
-
-
-                                VReached = line.Substring(line.IndexOf("V"));
-                                VReached = VReached.Substring(0, VReached.LastIndexOf("#"));
-
-                            }
-
-                        }
-
-
-                        DataRow row = dt.NewRow();
-
-
-                        row["Index"] = counter + "";
-                        row["FileName"] = FileName; ;
-                        row["Remarks"] = Remarks;
-                        row["VReached"] = VReached;
-                        row["Date"] = Date;
-
-                        dt.Rows.Add(row);
-
-                        counter++;
+                        MidLines[i] = MidLines[i].Substring(0, MidLines[i].IndexOf("V"));
                     }
                 }
-            }
+                string[] DistinctLines = MidLines.Distinct().ToArray();
 
 
+                for (int i = 0; i < DistinctLines.Length; i++)
+                {
+                    if (DistinctLines[i].Length > 0)
+                    {
 
-            /*
-                        foreach (string line in Lines)
+                        string FileName = "";
+                        string Remarks = "";
+                        string VReached = "";
+                        string Date = "";
+
+
+                        string str = DistinctLines[i].Substring(0, DistinctLines[i].LastIndexOf("-"));
+                        str = str.Substring(0, str.LastIndexOf("-"));
+                        str = str.Substring(0, str.LastIndexOf("-"));
+                        str = str.Substring(0, str.LastIndexOf("-"));
+                        str = str.Substring(str.IndexOf("-") + 1);
+                        //  ShowMessage(str);
+
+                        // str = str.Substring(0, str.IndexOf("-"));
+                        if (Session["DocType"].ToString().Equals(str))
                         {
-                            if (line.Length > 0)
+                            foreach (string line in Lines)
                             {
 
-                                if (Session["DocType"].ToString().Equals(line.Substring(0, line.IndexOf("-"))))
+
+                                if (DistinctLines[i].Equals(line.Substring(0, line.IndexOf("V"))))
                                 {
 
+                                    // FileName = line.Substring(0, line.IndexOf("#"));
+                                    FileName = line.Substring(0, line.LastIndexOf("-"));
+                                    Remarks = line.Substring(line.IndexOf("#") + 1);
+                                    Remarks = Remarks.Substring(0, Remarks.LastIndexOf("^"));
+                                    Date = line.Substring(line.IndexOf("^") + 1);
 
 
-
-
-
-
-
-                                    DataRow row = dt.NewRow();
-
-
-                                    row["Index"] = counter + "";
-                                    row["FileName"] = line.Substring(0, line.IndexOf("#")); ;
-                                    row["Remarks"] = line.Substring(line.IndexOf("#") + 1);
-
-                                    dt.Rows.Add(row);
-
-                                    counter++;
-
-
-
-
-
+                                    VReached = line.Substring(line.IndexOf("V"));
+                                    VReached = VReached.Substring(0, VReached.LastIndexOf("#"));
 
                                 }
+
                             }
 
+
+                            DataRow row = dt.NewRow();
+
+
+                            row["Index"] = counter + "";
+                            row["FileName"] = FileName; ;
+                            row["Remarks"] = Remarks;
+                            row["VReached"] = VReached;
+                            row["Date"] = Date;
+
+                            dt.Rows.Add(row);
+
+                            counter++;
                         }
-
-            */
-
-
+                    }
+                }
 
 
 
-            return dt;
-            }else { return null; }
+                /*
+                            foreach (string line in Lines)
+                            {
+                                if (line.Length > 0)
+                                {
+
+                                    if (Session["DocType"].ToString().Equals(line.Substring(0, line.IndexOf("-"))))
+                                    {
+
+
+
+
+
+
+
+
+                                        DataRow row = dt.NewRow();
+
+
+                                        row["Index"] = counter + "";
+                                        row["FileName"] = line.Substring(0, line.IndexOf("#")); ;
+                                        row["Remarks"] = line.Substring(line.IndexOf("#") + 1);
+
+                                        dt.Rows.Add(row);
+
+                                        counter++;
+
+
+
+
+
+
+                                    }
+                                }
+
+                            }
+
+                */
+
+
+
+
+
+                return dt;
+            }
+            else { return null; }
         }
 
         public void GetDep()
@@ -578,6 +575,9 @@ namespace SAAS.Pages
 
         public string GetLastDocNumber()
         {
+
+
+
             int MaxNum = 0;
             string[] Lines = File.ReadAllLines(FilePath);
             string str = "";
@@ -672,10 +672,69 @@ namespace SAAS.Pages
 
         //}
 
+        public void EditDate(string name, string Date)
+        {
+
+
+
+            Date = Date.Replace("-", " ");
+            Date = Date.Replace("#", " ");
+            Date = Date.Replace("^", " ");
+            Date = Date.Replace(System.Environment.NewLine, " ");
+            string[] Lines = File.ReadAllLines(FilePath);
+            string[] temoLines = Lines;
+            string date = "";
+            int counter = 0;
+
+            foreach (string line in temoLines)
+            {
+                if (line.Length > 0)
+                {
+
+                    if (line.Substring(0, line.LastIndexOf("#")).Equals(name))
+                    {
+
+
+
+                        Lines[counter] = line.Substring(0, line.IndexOf("^")) + "^" + Date;
+
+                        //  row["FileName"] = line.Substring(0, line.IndexOf("#")); ;
+                        //   row["Remarks"] = line.Substring(line.IndexOf("#") + 1);
+
+
+                    }
+                }
+                counter++;
+            }
+
+            File.WriteAllText(FilePath, String.Empty);
+
+            foreach (string line in Lines)
+            {
+                if (line.Length > 0)
+                {
+
+
+                    File.AppendAllText(FilePath, line + "\n");
+
+
+
+                }
+
+            }
+
+
+
+
+        }
         public void EditRemarks(string name, string newRemarks)
         {
 
 
+            newRemarks = newRemarks.Replace("-", " ");
+            newRemarks = newRemarks.Replace("#", " ");
+            newRemarks = newRemarks.Replace("^", " ");
+            newRemarks = newRemarks.Replace(System.Environment.NewLine, " ");
 
             string[] Lines = File.ReadAllLines(FilePath);
             string[] temoLines = Lines;
@@ -923,7 +982,7 @@ namespace SAAS.Pages
                 }
                 else
                 {
-
+                    if (Session["NameOfFile"] != null) { 
                     string name = DataGridUsers.DataKeys[e.Row.RowIndex].Value.ToString();
                     string nameFromSession = Session["NameOfFile"].ToString().Substring(0, Session["NameOfFile"].ToString().LastIndexOf("-"));
                     if (name.Equals(nameFromSession))
@@ -1011,12 +1070,13 @@ namespace SAAS.Pages
 
 
                                             }
-
+                    }
 
 
 
                                         }*/
 
+                }
                 }
 
             }
@@ -1030,6 +1090,11 @@ namespace SAAS.Pages
             {
 
                 CreateNewVirsion(e.CommandArgument.ToString());
+
+
+                AddedNew = true;
+
+
                 View = 2;
 
                 //Response.Write("<script>alert('" + Convert.ToInt32(e.CommandArgument.ToString()) + "');</script>");
@@ -1249,10 +1314,12 @@ namespace SAAS.Pages
             //Finding the controls from Gridview for the row which is going to update
             Label index = (DataGridUsers.Rows[OutterEditIndex].FindControl("DataGridV") as GridView).Rows[InnerEditIndex].FindControl("lbl_QuansgtInner") as Label;
             TextBox city = (DataGridUsers.Rows[OutterEditIndex].FindControl("DataGridV") as GridView).Rows[InnerEditIndex].FindControl("txt_CityInner") as TextBox;
+            TextBox Date = (DataGridUsers.Rows[OutterEditIndex].FindControl("DataGridV") as GridView).Rows[InnerEditIndex].FindControl("lbl_DateInner") as TextBox;
 
 
 
             EditRemarks(index.Text, city.Text);
+            EditDate(index.Text, Date.Text);
 
 
             // ShowMessage(city.Text + " - " + index.Text);
@@ -1348,13 +1415,18 @@ namespace SAAS.Pages
         protected void GridView1_RowUpdating(object sender, System.Web.UI.WebControls.GridViewUpdateEventArgs e)
         {
             //Finding the controls from Gridview for the row which is going to update
+
+
+
             Label index = DataGridUsers.Rows[e.RowIndex].FindControl("lbl_Quansgt") as Label;
             Label v = DataGridUsers.Rows[e.RowIndex].FindControl("lbl_Quansgt12") as Label;
             TextBox city = DataGridUsers.Rows[e.RowIndex].FindControl("txt_City") as TextBox;
+            TextBox DateTb = DataGridUsers.Rows[e.RowIndex].FindControl("txt_Date") as TextBox;
 
 
 
             EditRemarks(index.Text + "-" + v.Text, city.Text);
+            EditDate(index.Text + "-" + v.Text, DateTb.Text);
 
 
             // ShowMessage(city.Text + " - " + index.Text);
