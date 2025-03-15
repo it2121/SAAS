@@ -108,10 +108,25 @@ namespace SAAS.Pages
 
                 if (AddedNew)
                 {
+                    int  theLineNumber = Gdt.Rows.Count - 1;
+
+                    string[] Lines = File.ReadAllLines(FilePath);
+                    int counter = 0;
+                    foreach(DataRow row in Gdt.Rows)
+                    {
+
+                        if(Lines[Lines.Length-1].Substring(0, Lines[Lines.Length - 1].ToString().LastIndexOf("-")).Equals(row["FileName"].ToString())){
+
+                            theLineNumber = counter;
+                            break;
+                        }
+                        counter++;
+                    }
 
 
-                    DataGridUsers.EditIndex = Gdt.Rows.Count - 1;
-                    OutterEditIndex = Gdt.Rows.Count - 1;
+
+                    DataGridUsers.EditIndex = theLineNumber;
+                    OutterEditIndex = theLineNumber;
                     AddedNew = false;
                     //GridView1.SetEditRow(e.NewEditIndex);
                     reBindData();
