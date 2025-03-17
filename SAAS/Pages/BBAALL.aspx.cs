@@ -114,7 +114,7 @@ namespace SAAS.Pages
             return DDAALL.ExecuteSelectCommand(cm);
         }
 
-        public static DataTable UploadFIle(int ID, byte[] UploadedFile)
+        public static DataTable UploadFile(int ID, byte[] UploadedFile,string FileType,string FileName)
         {
 
 
@@ -128,6 +128,8 @@ namespace SAAS.Pages
 
             cm.Parameters.AddWithValue("@UploadedFile", UploadedFile);
             cm.Parameters.AddWithValue("@ID", ID);
+            cm.Parameters.AddWithValue("@FileType", FileType);
+            cm.Parameters.AddWithValue("@FileName", FileName);
 
 
             SqlConnection.ClearAllPools();
@@ -185,7 +187,21 @@ namespace SAAS.Pages
         
         
         
-        public static DataTable GetVersionsList(int ID)
+        public static DataTable GetVersionsListWithFile(int ID)
+        {
+
+
+            SqlCommand cm;
+            cm = DDAALL.CreateCommand();
+            cm.CommandText = "GetVersionsListWithFile";
+
+            cm.Parameters.AddWithValue("@ID", ID);
+
+
+            SqlConnection.ClearAllPools();
+            return DDAALL.ExecuteSelectCommand(cm);
+        }    
+          public static DataTable GetVersionsList(int ID)
         {
 
 

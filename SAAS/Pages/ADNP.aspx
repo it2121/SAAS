@@ -63,7 +63,53 @@
 
       </script>
 
+        <script>
 
+
+            document.addEventListener('DOMContentLoaded', () => {
+                // Functions to open and close a modal
+                function openModal($el) {
+                    $el.classList.add('is-active');
+                }
+
+                function closeModal($el) {
+                    $el.classList.remove('is-active');
+                }
+
+                function closeAllModals() {
+                    (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+                        closeModal($modal);
+                    });
+                }
+
+                // Add a click event on buttons to open a specific modal
+                (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
+                    const modal = $trigger.dataset.target;
+                    const $target = document.getElementById(modal);
+
+                    $trigger.addEventListener('click', () => {
+                        openModal($target);
+                    });
+                });
+
+                // Add a click event on various child elements to close the parent modal
+                (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
+                    const $target = $close.closest('.modal');
+
+                    $close.addEventListener('click', () => {
+                        closeModal($target);
+                    });
+                });
+
+                // Add a keyboard event to close all modals
+                document.addEventListener('keydown', (event) => {
+                    if (event.code === 'Escape') {
+                        closeAllModals();
+                    }
+                });
+            });
+
+        </script>
 
 
 
@@ -214,9 +260,10 @@
 
     </head>
 <body>
-
+  
     <form id="form1" runat="server">
-
+               <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true">
+</asp:ScriptManager>
            
                 <!-- page-content  -->
                 <main class="page-content pt-2">
@@ -266,7 +313,6 @@
      <asp:LinkButton  runat="server"  style="background-color: white; color: #33B3FF; font: bold; border-color:#33B3FF" text="Add New"
         
          
-         data-target="modal-js-example"
                                  onclick="AddNew"
          ID="AddNewBtn"
          
@@ -300,7 +346,6 @@
 
      <asp:LinkButton  runat="server"  style="background-color: white; color: #33B3FF; font: bold; border-color:#33B3FF" text="Return"
       
-         data-target="modal-js-example"
                                  onclick="Return"
          ID="returnBtn"
          Visible="false"
@@ -549,7 +594,47 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
                          
                 </asp:TemplateField>
 
-                     
+                        
+                   <asp:TemplateField  ItemStyle-HorizontalAlign="Center" >       <HeaderStyle Width="10" />
+<ItemStyle Width="10" />
+                    <ItemTemplate>
+                        <asp:Button Font-Bold="true"
+                                                                class="js-modal-trigger button  is-bold is-info is-outlined"
+                                    Style="width: 50%; height: 25px"
+                            Font-Size="Small"
+                            CommandArgument='<%#Eval("ID1") %>' CommandName="UploadFileV"
+         data-target="modal-js-example"
+
+                            ID="btnNewVd_Edit1U" runat="server" Text="🔼"  />
+
+                    </ItemTemplate>
+
+                         
+                </asp:TemplateField>
+                                 <asp:TemplateField  ItemStyle-HorizontalAlign="Center" >       <HeaderStyle Width="10" />
+<ItemStyle Width="10" />
+                    <ItemTemplate>
+                        <asp:Button Font-Bold="true"
+                                                                class="js-modal-trigger button  is-bold is-warning is-outlined"
+                                    Style="width: 50%; height: 25px"
+                            Font-Size="Small"
+                            CommandArgument='<%#Eval("ID1") %>' CommandName="DownloadFileV"
+                                                         Visible ='<%# Eval("FileName").ToString().Length> 0 ?  true:false %>'
+
+                            ID="btnNewVd_Edit1D" runat="server" Text="🔽"  />
+
+                    </ItemTemplate>
+
+                         
+                </asp:TemplateField>
+
+
+
+
+                
+
+
+
                      <asp:TemplateField  >
                             <EditItemTemplate > 
                                 <asp:Button ID="btn_UpdateInner" class="js-modal-trigger button is-warning"
@@ -571,6 +656,7 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
 
 
                     </asp:Panel>
+                    <script></script>
 
                 </ItemTemplate>
             </asp:TemplateField>
@@ -730,6 +816,41 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
                          
                 </asp:TemplateField>
 
+
+                        <asp:TemplateField  ItemStyle-HorizontalAlign="Center" >       <HeaderStyle Width="10" />
+<ItemStyle Width="10" />
+                    <ItemTemplate>
+                        <asp:Button Font-Bold="true"
+                                                                class="js-modal-trigger button  is-bold is-info is-outlined"
+                                    Style="width: 50%; height: 25px"
+                            Font-Size="Small"
+                            CommandArgument='<%#Eval("ID") %>' CommandName="UploadFile"
+         data-target="modal-js-example"
+
+                            OnClientClick= '<%# String.Format("return showUploadFile(\"{0}\")",Eval("ID"))%>'
+                          
+                            ID="btnNewVd_Edit1U1" runat="server" Text="🔼"  />
+
+                    </ItemTemplate>
+
+                         
+                </asp:TemplateField>
+                                 <asp:TemplateField  ItemStyle-HorizontalAlign="Center" >       <HeaderStyle Width="10" />
+<ItemStyle Width="10" />
+                    <ItemTemplate>
+                        <asp:Button Font-Bold="true"
+                                                                class="js-modal-trigger button  is-bold is-warning is-outlined"
+                                    Style="width: 50%; height: 25px"
+                            Font-Size="Small"
+                            CommandArgument='<%#Eval("ID") %>' CommandName="DownloadFile"
+                                                         Visible ='<%# Eval("FileName").ToString().Length> 0 ?  true:false %>'
+
+                            ID="btnNewVd_Edit1D1" runat="server" Text="🔽"  />
+
+                    </ItemTemplate>
+
+                         
+                </asp:TemplateField>
                      
                      <asp:TemplateField  >       <HeaderStyle Width="10" />
 <ItemStyle Width="10" />
@@ -1113,14 +1234,122 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
              </main>
                 <!-- page-content" -->
 
+           <div id="modal-js-example" class="modal" >
+        <div class="modal-background  "></div>
 
+        <div class="modal-content">
+            <div class="box bg-light">
            
-             
+                    <panel id="UploadPanel" style="display:none;">
+
+                <p>Upload File</p>
 
 
-                
+                <br />
+
+
+                <div class="row">
+                    <div class="col-12">
+                         <center>
+                       <button  class="button is-danger is-outlined" style="width:100%; color:#f39658;">
+
+<%--                        <asp:TextBox runat="server" ReadOnly="true" ID="FileAdrs" class="input is-warning " BackColor="LightGray" placeholder="File Address"></asp:TextBox>--%>
+                                                    <asp:FileUpload ID="FileUploadControl" Visible="true" runat="server" Width="100%"/>
+                         </button>
+                                </center>
+                    </div>
+                    <div class="col-3">
+<%--                            <asp:FileUpload id="FileUploadControl" Visible="false" runat="server"/>--%> 
+                        
+<%--                        <asp:Button   runat="server" Font-Bold="true"  BackColor="DarkGray" Text="Browse" class=" button is-fullwidth  align align-content-center text-white "> </asp:Button>--%>
+                     
+
+                    </div>
+                </div>
+                <br />
+                <br />
+              
+                <div class="row">
+                   
+                    <div class="col-12">
+   <center>
+                   <asp:LinkButton ID="UpBtn"  onclick="Upload" runat="server" Font-Bold="true" Width="75%" BackColor="#f39658" Text="Upload" class=" button is-fullwidth  align align-content-center text-white ">Upload <i class="fas fa-upload " style="margin-left: 2em"></i></asp:LinkButton>
+
+         </center>
+                    </div>
+                </div>
+                   
+                <br />
+
+                </panel>
+
+                  <asp:Panel runat="server" id="UploadPanelV" style="display:none;" >
+
+                <p>Upload File</p>
+
+
+                <br />
+
+
+                <div class="row">
+                    <div class="col-12">
+                         <center>
+                       <button  class="button is-danger is-outlined" style="width:100%; color:#f39658;">
+
+<%--                        <asp:TextBox runat="server" ReadOnly="true" ID="FileAdrs" class="input is-warning " BackColor="LightGray" placeholder="File Address"></asp:TextBox>--%>
+                                                    <asp:FileUpload ID="FileUpload1V" Visible="true" runat="server" Width="100%"/>
+                         </button>
+                                </center>
+                    </div>
+                    <div class="col-3">
+<%--                            <asp:FileUpload id="FileUploadControl" Visible="false" runat="server"/>--%> 
+                        
+<%--                        <asp:Button   runat="server" Font-Bold="true"  BackColor="DarkGray" Text="Browse" class=" button is-fullwidth  align align-content-center text-white "> </asp:Button>--%>
+                     
+
+                    </div>
+                </div>
+                <br />
+                <br />
+              
+                <div class="row">
+                   
+                    <div class="col-12">
+   <center>
+                   <asp:LinkButton ID="LinkButton1V"  onclick="UploadV" runat="server" Font-Bold="true" Width="75%" BackColor="#f39658" Text="Upload" class=" button is-fullwidth  align align-content-center text-white ">Upload <i class="fas fa-upload " style="margin-left: 2em"></i></asp:LinkButton>
+
+         </center>
+                    </div>
+                </div>
+                   
+                <br />
+
+                </asp:Panel>
+
+                 </div> </div> </div> </div>
+           
     
+
       
     </form>
+
 </body>
+         <script  type="text/javascript"> function showUploadFile(FFID) {
+                 document.getElementById('UploadPanel').style.display = "block";
+                 PageMethods.SetFFID(FFID);
+                 return false;
+             }
+
+             function showUploadFileV() {
+                 document.getElementById('UploadPanelV').style.display = "block";
+               
+             }
+         
+
+
+
+
+         </script>
+
+    
 </html>

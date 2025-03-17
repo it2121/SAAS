@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 namespace SAAS.Pages
@@ -34,7 +35,8 @@ namespace SAAS.Pages
 
 
                 SAAS.Pages.Error.FromADNP = true;
-
+           
+                
             }
             else
             {
@@ -48,6 +50,7 @@ namespace SAAS.Pages
                         reBindData();*/
                 //   setInnerEditIndex();
                 SAAS.Pages.Error.FromADNP = true;
+
             }
         }
 
@@ -726,7 +729,109 @@ namespace SAAS.Pages
     }
     
     public bool Fired = false;
-    protected void MyGridView_OnRowCommand(object sender, GridViewCommandEventArgs e)
+        protected void Upload(object sender, EventArgs e)
+        {
+
+
+
+            string FileType = "";
+            if (FileUploadControl.HasFile)
+            {
+                FileSelected = true;
+
+                filename = System.IO.Path.GetFileName(FileUploadControl.PostedFile.FileName);
+
+                 FileType = FileUploadControl.PostedFile.ContentType;
+                if (filename.Length != 0)
+                {
+                    string contentType = FileUploadControl.PostedFile.ContentType;
+                    using (Stream fs = FileUploadControl.PostedFile.InputStream)
+                    {
+                        using (BinaryReader br = new BinaryReader(fs))
+                        {
+                            byte[] bytes = br.ReadBytes((Int32)fs.Length);
+                            Data = bytes;
+
+                        }
+                    }
+                }
+
+
+
+            }
+
+
+            if (FileSelected)
+            {
+                DataTable dt = BBAALL.GetVersionsList(Convert.ToInt32(ID));
+
+
+
+                BBAALL.UploadFile(Convert.ToInt32(dt.Rows[dt.Rows.Count - 1]["ID1"].ToString()), Data,FileType, filename);
+                FileSelected = false;
+                // ShowMessage(ID + " - " + Convert.ToInt32(dt.Rows[dt.Rows.Count - 1]["ID1"].ToString()));
+
+            }
+
+            refresh();
+
+        }    protected void UploadV(object sender, EventArgs e)
+        {
+
+
+
+            string FileType = "";
+            if (FileUpload1V.HasFile)
+            {
+                FileSelected = true;
+
+                filename = System.IO.Path.GetFileName(FileUpload1V.PostedFile.FileName);
+
+                 FileType = FileUpload1V.PostedFile.ContentType;
+                if (filename.Length != 0)
+                {
+                    string contentType = FileUpload1V.PostedFile.ContentType;
+                    using (Stream fs = FileUpload1V.PostedFile.InputStream)
+                    {
+                        using (BinaryReader br = new BinaryReader(fs))
+                        {
+                            byte[] bytes = br.ReadBytes((Int32)fs.Length);
+                            Data = bytes;
+
+                        }
+                    }
+                }
+
+
+
+            }
+
+
+            if (FileSelected)
+            {
+
+
+
+                BBAALL.UploadFile(Convert.ToInt32(ID), Data,FileType, filename);
+                FileSelected = false;
+                // ShowMessage(ID + " - " + Convert.ToInt32(dt.Rows[dt.Rows.Count - 1]["ID1"].ToString()));
+
+            }
+
+            refresh();
+
+        }
+
+
+        [WebMethod]
+        public static void SetFFID(string FFID)
+        {
+            ID = Convert.ToInt32(FFID);
+
+
+
+        }
+        protected void MyGridView_OnRowCommand(object sender, GridViewCommandEventArgs e)
     {//GoToPay
         string x = e.CommandName;//returns "Select" for both asp:CommandField columns
         /*      if (!Fired) { */
@@ -830,12 +935,57 @@ namespace SAAS.Pages
 
 
             refresh();
+        }    if (x.Equals("DownloadFile"))
+        {
+
+                DownloadItem(Convert.ToInt32(e.CommandArgument.ToString()));
+
+
+
+
+
+            refresh();
+        }   if (x.Equals("DownloadFileV"))
+        {
+
+                DownloadItemV(Convert.ToInt32(e.CommandArgument.ToString()));
+
+
+
+
+
+            refresh();
         }
+        
+        if (x.Equals("UploadFile"))
+        {
 
 
-      
 
-        if (x.Equals("Editt"))
+                ID = Convert.ToInt32(e.CommandArgument.ToString());
+                //Response.Write("<script>alert('" + Convert.ToInt32(e.CommandArgument.ToString()) + "');</script>");
+
+
+
+
+        }  if (x.Equals("UploadFileV"))
+        {
+
+
+                ID = Convert.ToInt32(e.CommandArgument.ToString());
+                Session["UploadVID"] = ID+"";
+
+                //Response.Write("<script>alert('" + Convert.ToInt32(e.CommandArgument.ToString()) + "');</script>");
+
+
+
+
+            }
+
+
+
+
+            if (x.Equals("Editt"))
         {
             int counter = 0;
             int OutterCounter = 0;
@@ -887,7 +1037,7 @@ namespace SAAS.Pages
   
 
     }
- 
+        public static bool ReadyForUpload;
     protected void GridView1_RowUpdatingV(object sender, System.Web.UI.WebControls.GridViewUpdateEventArgs e)
     {
 
@@ -1023,29 +1173,29 @@ namespace SAAS.Pages
 
 
 
-    protected void DownloadItem(object sender, EventArgs e)
+    protected void DownloadItem(int ID)
     {
 
 
         byte[] bytes;
         string fileName;
 
-        DataTable DT = BBAALL.GetADNPByID(Convert.ToInt32(((Button)sender).ToolTip));
+        DataTable DT = BBAALL.GetVersionsListWithFile(ID);
 
 
-        if (DT.Rows[0]["UploadedFile"].ToString().Length > 0)
+        if (DT.Rows[DT.Rows.Count-1]["TheFile"].ToString().Length > 0)
         {
 
             HttpContext.Current.Response.Clear();
             HttpContext.Current.Response.ClearHeaders();
             HttpContext.Current.Response.ClearContent();
-            HttpContext.Current.Response.ContentType = "application/pdf";
+            HttpContext.Current.Response.ContentType = DT.Rows[DT.Rows.Count - 1]["FileType"].ToString();
 
-            string name = DT.Rows[0]["Prefex"] + "-" + DT.Rows[0]["DocType"] + "-" + DT.Rows[0]["Number"] + "-" + DT.Rows[0]["Year"] + "-" + DT.Rows[0]["Version"];
+            string name = DT.Rows[DT.Rows.Count - 1]["Prefex"] + "-" + DT.Rows[DT.Rows.Count - 1]["DocType"] + "-" + DT.Rows[DT.Rows.Count - 1]["Number"] + "-" + DT.Rows[DT.Rows.Count - 1]["Year"] + "-" + DT.Rows[DT.Rows.Count - 1]["Version"];
             HttpContext.Current.Response.BufferOutput = true;
-            HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=" + name + " - PDF File.pdf");
+            HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=" + DT.Rows[DT.Rows.Count - 1]["FileName"].ToString());
 
-            HttpContext.Current.Response.BinaryWrite((byte[])DT.Rows[0]["UploadedFile"]);
+            HttpContext.Current.Response.BinaryWrite((byte[])DT.Rows[DT.Rows.Count - 1]["TheFile"]);
             HttpContext.Current.Response.Flush();
             HttpContext.Current.Response.End();
 
@@ -1055,7 +1205,41 @@ namespace SAAS.Pages
         else
         {
 
-            ClientScript.RegisterStartupScript(this.GetType(), "Alert ! ", "alert('PDF is not Uploaded yet.');", true);
+            ClientScript.RegisterStartupScript(this.GetType(), "Alert ! ", "alert('file is not Uploaded yet.');", true);
+        }
+    } protected void DownloadItemV(int ID)
+    {
+
+
+        byte[] bytes;
+        string fileName;
+
+        DataTable DT = BBAALL.GetVersionByID(ID);
+
+
+        if (DT.Rows[0]["TheFile"].ToString().Length > 0)
+        {
+
+            HttpContext.Current.Response.Clear();
+            HttpContext.Current.Response.ClearHeaders();
+            HttpContext.Current.Response.ClearContent();
+            HttpContext.Current.Response.ContentType = DT.Rows[0]["FileType"].ToString();
+                DataTable dt = BBAALL.GetADNPByID(Convert.ToInt32(DT.Rows[0]["MainRecordID"].ToString()));
+            string name = dt.Rows[0]["Prefex"] + "-" + dt.Rows[0]["DocType"] + "-" + dt.Rows[0]["Number"] + "-" + dt.Rows[0]["Year"] + "-" + DT.Rows[0]["Version"];
+            HttpContext.Current.Response.BufferOutput = true;
+            HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=" + DT.Rows[0]["FileName"].ToString());
+
+            HttpContext.Current.Response.BinaryWrite((byte[])DT.Rows[0]["TheFile"]);
+            HttpContext.Current.Response.Flush();
+            HttpContext.Current.Response.End();
+
+
+
+        }
+        else
+        {
+
+            ClientScript.RegisterStartupScript(this.GetType(), "Alert ! ", "alert('file is not Uploaded yet.');", true);
         }
     }
     public static byte[] Data = null;
