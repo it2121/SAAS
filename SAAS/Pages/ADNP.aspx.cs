@@ -499,12 +499,7 @@ namespace SAAS.Pages
 
 
 
-        Date = Date.Replace("-", " ");
-        Date = Date.Replace("#", " ");
-        Date = Date.Replace("^", " ");
-        Date = Date.Replace("{", " ");
-        Date = Date.Replace("}", " ");
-        Date = Date.Replace(System.Environment.NewLine, " ");
+     
         string[] Lines = File.ReadAllLines(FilePath);
         string[] temoLines = Lines;
         string date = "";
@@ -552,12 +547,7 @@ namespace SAAS.Pages
     {
 
 
-        newRemarks = newRemarks.Replace("-", " ");
-        newRemarks = newRemarks.Replace("#", " ");
-        newRemarks = newRemarks.Replace("^", " ");
-        newRemarks = newRemarks.Replace("}", " ");
-        newRemarks = newRemarks.Replace("{", " ");
-        newRemarks = newRemarks.Replace(System.Environment.NewLine, " ");
+
 
         string[] Lines = File.ReadAllLines(FilePath);
         string[] temoLines = Lines;
