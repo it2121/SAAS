@@ -73,13 +73,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Data\BackUps.txt" />
     <Content Include="Data\Data.txt" />
+    <Content Include="Data\DevBackUp.txt" />
     <Content Include="Pages\ADNP.aspx" />
     <Content Include="Pages\BBAALL.aspx" />
     <Content Include="Pages\DDAALL.aspx" />
     <Content Include="Pages\EMainPage.aspx" />
     <Content Include="Pages\EMainPageEditor.aspx" />
     <Content Include="Pages\EMainPageView.aspx" />
+    <Content Include="Pages\Error.aspx" />
     <Content Include="Pages\Error.html" />
     <Content Include="Pages\Finance.aspx" />
     <Content Include="Pages\FinanceEditor.aspx" />
@@ -130,6 +133,13 @@
     </Compile>
     <Compile Include="Pages\EMainPageView.aspx.designer.cs">
       <DependentUpon>EMainPageView.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Finance.aspx.cs">
       <DependentUpon>Finance.aspx</DependentUpon>

@@ -350,7 +350,7 @@
                             CellPadding="6"
                             OnRowCancelingEdit="GridView1_RowCancelingEdit"
                              OnRowDataBound="OnRowDataBound"
-                                     DataKeyNames="FileName"
+                                     DataKeyNames="ID"
 OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
                             HeaderStyle-HorizontalAlign="Center"
                           OnRowCommand="MyGridView_OnRowCommand"
@@ -395,17 +395,17 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
 
                   <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="true" HeaderText="Index">
                     <ItemTemplate>
-                        <asp:Label  ID="lbl_IDInner" runat="server" Text='<%#Eval("Index") %>' Font-Bold="false" Font-Size="Small"></asp:Label>
+                        <asp:Label  ID="lbl_IDInner" runat="server" Text='<%#Eval("ID1") %>' Font-Bold="false" Font-Size="Small"></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                 
 
                    <asp:TemplateField HeaderText="Date Created"   ItemStyle-HorizontalAlign="Center">
                             <ItemTemplate>
-                                <asp:Label  style="word-wrap:break-word;max-width:25em; " Width="100%" ID="lbl_DateInner" runat="server" Text='<%#Eval("Date") %>'></asp:Label>
+                                <asp:Label  style="word-wrap:break-word;max-width:25em; " Width="100%" ID="lbl_DateInner" runat="server" Text='<%#Eval("TheDate") %>'></asp:Label>
                             </ItemTemplate>
                             <EditItemTemplate>
-                                <asp:TextBox    style="word-wrap:break-word;max-width:100%;" ID="lbl_DateInner"  Width="100%" runat="server" Text='<%#Eval("Date") %>'></asp:TextBox>
+                                <asp:TextBox    style="word-wrap:break-word;max-width:100%;" ID="txt_DateInner"  Width="100%" runat="server" Text='<%#Eval("TheDate") %>'></asp:TextBox>
                            
                             </EditItemTemplate>
                         </asp:TemplateField>
@@ -413,7 +413,7 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
 
                 <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="false" HeaderText="Date Created">
                     <ItemTemplate>
-                        <asp:Label  ID="lbl_QuansgtInnerDate" runat="server" Text='<%#Eval("Date") %>' Font-Bold="true" Font-Size="Small"></asp:Label>
+                        <asp:Label  ID="lbl_QuansgtInnerDate" runat="server" Text='<%#Eval("TheDate") %>' Font-Bold="true" Font-Size="Small"></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField> 
 
@@ -421,7 +421,14 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
 
                 <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="true" HeaderText="FileName">
                     <ItemTemplate>
-                        <asp:Label  ID="lbl_QuansgtInner" runat="server" Text='<%#Eval("FileName") %>' Font-Bold="true" Font-Size="Small"></asp:Label>
+
+                              <asp:Label  ID="lbl_QuansgtInner" runat="server" Text='<%#Eval("Prefex") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
+                        <asp:Label  ID="lbl_Quansgt12anotherInner1" runat="server" Text='<%# "-"+Eval("DocType") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
+                        <asp:Label  ID="lbl_Quansgt12another2Inner" runat="server" Text='<%# "-"+Eval("Dep") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
+                        <asp:Label  ID="lbl_Quansgt12another3Inner" runat="server" Text='<%# "-"+Eval("Number") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
+                        <asp:Label  ID="lbl_Quansgt12another4Inner" runat="server" Text='<%# "-"+Eval("Year") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
+                        <asp:Label  ID="lbl_Quansgt12another5Inner" runat="server" Text='<%# "-"+Eval("Version") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
+
                     </ItemTemplate>
                 </asp:TemplateField>   
              <%--   <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="true" HeaderText="FileName">
@@ -517,7 +524,7 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
                                     style="Width:30%; Height:25px; padding-left:0.5em; padding-top:0.1em; padding-bottom:0.5em; margin-right:0.3em;"  
                                                                  Font-Size="Small"
                                     Height="10px" 
-                                    ID="btn_EditVInner" runat="server" Text="✎"  CommandName="Editt" ToolTip='<%#Eval("FileName") %>' CommandArgument='<%#Eval("FileName") %>'/>
+                                    ID="btn_EditVInner" runat="server" Text="✎"  CommandName="Editt" ToolTip='<%#Eval("ID1") %>' CommandArgument='<%#Eval("ID1") %>'/>
                             </ItemTemplate>
                               </asp:TemplateField>
                     
@@ -531,7 +538,7 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
                                                                 class="js-modal-trigger button  is-bold is-danger is-outlined"
                                     style="Width:30%; Height:25px; padding-left:0.5em; padding-top:0.1em; padding-bottom:0.5em; margin-right:0.3em;"  
                              Font-Size="Small"
-                            CommandArgument='<%#Eval("FileName") %>' CommandName="DeleteLineV"
+                            CommandArgument='<%#Eval("ID1") %>' CommandName="DeleteLineV"
 
                              OnClientClick="return confirmation();"
                             ID="btnNewVd_Edit1Inner" runat="server" Text="✗"   />
@@ -577,7 +584,7 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
                   <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="true" HeaderText="Index">       <HeaderStyle Width="10" />
 <ItemStyle Width="10" />
                     <ItemTemplate>
-                        <asp:Label  ID="lbl_ID" runat="server" Text='<%#Eval("Index") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
+                        <asp:Label  ID="lbl_ID" runat="server" Text='<%#Eval("ID") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>   
 
@@ -585,10 +592,10 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
 
                    <asp:TemplateField HeaderText="Date Created"   ItemStyle-HorizontalAlign="Center">
                             <ItemTemplate>
-                                <asp:Label  style="word-wrap:break-word;max-width:25em; " Width="100%" ID="lbl_Date" runat="server" Text='<%#Eval("Date") %>'></asp:Label>
+                                <asp:Label  style="word-wrap:break-word;max-width:25em; " Width="100%" ID="lbl_Date" runat="server" Text='<%#Eval("TheDate") %>'></asp:Label>
                             </ItemTemplate>
                             <EditItemTemplate>
-                                <asp:TextBox    style="word-wrap:break-word;max-width:100%;" ID="txt_Date"  Width="100%" runat="server" Text='<%#Eval("Date") %>'></asp:TextBox>
+                                <asp:TextBox    style="word-wrap:break-word;max-width:100%;" ID="txt_Date"  Width="100%" runat="server" Text='<%#Eval("TheDate") %>'></asp:TextBox>
                            
                             </EditItemTemplate>
                         </asp:TemplateField>
@@ -598,21 +605,25 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
                   <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="false" HeaderText="Date Created"> <HeaderStyle Width="10" />
 <ItemStyle Width="10" />
                     <ItemTemplate>
-                        <asp:Label  ID="lbl_QuansgtDate" runat="server" Text='<%#Eval("Date") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
+                        <asp:Label  ID="lbl_QuansgtDate" runat="server" Text='<%#Eval("TheDate") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField> 
 
 
                 <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="true" HeaderText="FileName">
                     <ItemTemplate>
-                        <asp:Label  ID="lbl_Quansgt" runat="server" Text='<%#Eval("FileName") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
-                        <asp:Label  ID="lbl_Quansgt12another" runat="server" Text='<%# "-"+Eval("VReached") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
+                        <asp:Label  ID="lbl_Quansgt" runat="server" Text='<%#Eval("Prefex") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
+                        <asp:Label  ID="lbl_Quansgt12another1" runat="server" Text='<%# "-"+Eval("DocType") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
+                        <asp:Label  ID="lbl_Quansgt12another2" runat="server" Text='<%# "-"+Eval("Dep") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
+                        <asp:Label  ID="lbl_Quansgt12another3" runat="server" Text='<%# "-"+Eval("Number") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
+                        <asp:Label  ID="lbl_Quansgt12another4" runat="server" Text='<%# "-"+Eval("Year") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
+                        <asp:Label  ID="lbl_Quansgt12another5" runat="server" Text='<%# "-"+Eval("Version") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>   
                 <asp:TemplateField   ItemStyle-HorizontalAlign="Center" Visible="false" HeaderText="Latest Version   ">       <HeaderStyle Width="1" />
 <ItemStyle Width="1" />
                     <ItemTemplate>
-                        <asp:Label   ID="lbl_Quansgt12" runat="server" Text='<%#Eval("VReached") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
+                        <asp:Label   ID="lbl_Quansgt12" runat="server" Text='<%#Eval("Version") %>' Font-Bold="true" Font-Size="Medium"></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>   
 
@@ -664,7 +675,7 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
                                                                 class="js-modal-trigger button  is-bold is-warning"
                                     Style="width: 50%; height: 25px"
 
-                            CommandArgument='<%#Eval("FileName") %>' CommandName="CreateNewVirsion"
+                            CommandArgument='<%#Eval("ID") %>' CommandName="CreateNewVirsion"
 
 
                             ID="btnNewV_Edit1" runat="server" Text="V+"  />
@@ -680,8 +691,8 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
                                                                 class="js-modal-trigger button  is-bold is-danger"
                                     Style="width: 50%; height: 25px"
 
-                            CommandArgument='<%#Eval("FileName") %>' CommandName="RemoveLastVirstion"
-                             Visible ='<%# Eval("VReached").ToString() == "V1" ? false :true %>'
+                            CommandArgument='<%#Eval("ID") %>' CommandName="RemoveLastVirstion"
+                             Visible ='<%# Eval("Version").ToString() == "V1" ? false :true %>'
 
                             ID="btnNewV_Editeee1" runat="server" Text="V-"  />
 
@@ -709,7 +720,7 @@ OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"
                                                                 class="js-modal-trigger button  is-bold is-danger is-outlined"
                                     Style="width: 50%; height: 25px"
                             Font-Size="Small"
-                            CommandArgument='<%#Eval("FileName") %>' CommandName="DeleteLine"
+                            CommandArgument='<%#Eval("ID") %>' CommandName="DeleteLine"
 
                              OnClientClick="return confirmation();"
                             ID="btnNewVd_Edit1" runat="server" Text="✗"  />

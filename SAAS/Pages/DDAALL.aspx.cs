@@ -19,9 +19,12 @@ namespace SAAS.Pages
         //  static string DatabaseConnectionString = @"Server=sql8020.site4now.net; Database=db_aa8601_ex; User Id=db_aa8601_ex_admin; Password=Akastarlord1._; ";
         //  static string DatabaseConnectionStringLAW = @"Server=sql5112.site4now.net; Database=db_aa8601_lawdb; User Id=db_aa8601_lawdb_admin; Password=Akastarlord1._; ";
 
-
+/*
           static string DatabaseConnectionString = @"Server=sql6033.site4now.net; Database=db_ab2b61_saas; User Id=db_ab2b61_saas_admin; Password=Akastarlord1._; ";
           static string DatabaseConnectionStringLAW = @"Server=sql6033.site4now.net; Database=db_ab2b61_saas; User Id=db_ab2b61_saas_admin; Password=Akastarlord1._; ";
+        */
+          static string DatabaseConnectionString = @"Server=GAMMA\HEAD; Database=SAAS;  Trusted_Connection  = True;";
+          static string DatabaseConnectionStringLAW = "";
 
 
         // static string DatabaseConnectionString = @"Server=192.168.0.117\HEADSERVER;Database=ExpensesDB; User Id=exp; Password=123;  ";
